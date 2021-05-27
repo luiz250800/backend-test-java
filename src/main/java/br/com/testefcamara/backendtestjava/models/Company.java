@@ -24,8 +24,11 @@ public class Company {
 
     private int qtVacanciesCar;
 
-    public Company(Long id, String nmCompany, String cdCnpj, String nmAddress, String nrPhone, int qtVacanciesMotorcycle, int qtVacanciesCar) {
-        this.id = id;
+    public Company (){
+
+    }
+
+    public Company(String nmCompany, String cdCnpj, String nmAddress, String nrPhone, int qtVacanciesMotorcycle, int qtVacanciesCar) {
         this.nmCompany = nmCompany;
         this.cdCnpj = cdCnpj;
         this.nmAddress = nmAddress;
@@ -62,9 +65,7 @@ public class Company {
         return nmAddress;
     }
 
-    public void setNmAddress(String nmAddress) {
-        this.nmAddress = nmAddress;
-    }
+    public void setNmAddress(String nmAddress) { this.nmAddress = nmAddress; }
 
     public String getNrPhone() {
         return nrPhone;
@@ -78,9 +79,7 @@ public class Company {
         return qtVacanciesMotorcycle;
     }
 
-    public void setQtVacanciesMotorcycle(int qtVacanciesMotorcycle) {
-        this.qtVacanciesMotorcycle = qtVacanciesMotorcycle;
-    }
+    public void setQtVacanciesMotorcycle(int qtVacanciesMotorcycle) { this.qtVacanciesMotorcycle = qtVacanciesMotorcycle; }
 
     public int getQtVacanciesCar() {
         return qtVacanciesCar;

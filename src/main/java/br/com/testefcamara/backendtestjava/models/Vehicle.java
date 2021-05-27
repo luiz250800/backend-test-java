@@ -25,16 +25,6 @@ public class Vehicle {
     @ManyToOne
     private Company company;
 
-    public Vehicle(Long id, String nmBrand, String nmModel, String nmColor, String nrBoard, TypeVehicle tpVehicle, Company company) {
-        this.id = id;
-        this.nmBrand = nmBrand;
-        this.nmModel = nmModel;
-        this.nmColor = nmColor;
-        this.nrBoard = nrBoard;
-        this.tpVehicle = tpVehicle;
-        this.company = company;
-    }
-
     public Long getId() {
         return id;
     }

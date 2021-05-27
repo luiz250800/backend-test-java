@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @RestController
+@RequestMapping("/api")
 public class VehicleController {
 
     @RequestMapping("/vehicle")
