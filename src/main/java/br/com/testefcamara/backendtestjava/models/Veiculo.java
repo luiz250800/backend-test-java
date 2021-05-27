@@ -1,76 +1,76 @@
 package br.com.testefcamara.backendtestjava.models;
 
-import br.com.testefcamara.backendtestjava.enums.TipoVeiculo;
+import br.com.testefcamara.backendtestjava.enums.TypeVehicle;
 
 public class Veiculo {
 
-    private Long idVeiculo;
+    private Long idVehicle;
 
-    private String nmMarca;
+    private String nmBrand;
 
-    private String nmModelo;
+    private String nmModel;
 
-    private String nmCor;
+    private String nmColor;
 
-    private String nrPlaca;
+    private String nrBoard;
 
-    private TipoVeiculo tpVeiculo;
+    private TypeVehicle TpVehicle;
 
-    private Empresa empresa;
+    private Company company;
 
-    public Long getIdVeiculo() {
-        return idVeiculo;
+    public Long getIdVehicle() {
+        return idVehicle;
     }
 
-    public void setIdVeiculo(Long idVeiculo) {
-        this.idVeiculo = idVeiculo;
+    public void setIdVehicle(Long idVehicle) {
+        this.idVehicle = idVehicle;
     }
 
-    public String getNmMarca() {
-        return nmMarca;
+    public String getNmBrand() {
+        return nmBrand;
     }
 
-    public void setNmMarca(String nmMarca) {
-        this.nmMarca = nmMarca;
+    public void setNmBrand(String nmBrand) {
+        this.nmBrand = nmBrand;
     }
 
-    public String getNmModelo() {
-        return nmModelo;
+    public String getNmModel() {
+        return nmModel;
     }
 
-    public void setNmModelo(String nmModelo) {
-        this.nmModelo = nmModelo;
+    public void setNmModel(String nmModel) {
+        this.nmModel = nmModel;
     }
 
-    public String getNmCor() {
-        return nmCor;
+    public String getNmColor() {
+        return nmColor;
     }
 
-    public void setNmCor(String nmCor) {
-        this.nmCor = nmCor;
+    public void setNmColor(String nmColor) {
+        this.nmColor = nmColor;
     }
 
-    public String getNrPlaca() {
-        return nrPlaca;
+    public String getNrBoard() {
+        return nrBoard;
     }
 
-    public void setNrPlaca(String nrPlaca) {
-        this.nrPlaca = nrPlaca;
+    public void setNrBoard(String nrBoard) {
+        this.nrBoard = nrBoard;
     }
 
-    public TipoVeiculo getTpVeiculo() {
-        return tpVeiculo;
+    public TypeVehicle getTpVehicle() {
+        return TpVehicle;
     }
 
-    public void setTpVeiculo(TipoVeiculo tpVeiculo) {
-        this.tpVeiculo = tpVeiculo;
+    public void setTpVehicle(TypeVehicle tpVehicle) {
+        TpVehicle = tpVehicle;
     }
 
-    public Empresa getEmpresa() {
-        return empresa;
+    public Company getCompany() {
+        return company;
     }
 
-    public void setEmpresa(Empresa empresa) {
-        this.empresa = empresa;
+    public void setCompany(Company company) {
+        this.company = company;
     }
 }
