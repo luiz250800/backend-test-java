@@ -16,6 +16,16 @@ public class Company {
 
     private int qtVacanciesCar;
 
+    public Company(Long idCompany, String nmCompany, String cdCnpj, String nmAddress, String nrPhone, int qtVacanciesMotorcycle, int qtVacanciesCar) {
+        this.idCompany = idCompany;
+        this.nmCompany = nmCompany;
+        this.cdCnpj = cdCnpj;
+        this.nmAddress = nmAddress;
+        this.nrPhone = nrPhone;
+        this.qtVacanciesMotorcycle = qtVacanciesMotorcycle;
+        this.qtVacanciesCar = qtVacanciesCar;
+    }
+
     public Long getIdCompany() {
         return idCompany;
     }
