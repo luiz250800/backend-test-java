@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class VehicleDto {
-    private Long idVehicle;
+    private Long id;
 
     private String nmBrand;
 
@@ -23,7 +23,7 @@ public class VehicleDto {
     private Company company;
 
     public VehicleDto(Vehicle vehicle) {
-        this.idVehicle = vehicle.getIdVehicle();
+        this.id = vehicle.getId();
         this.nmBrand = vehicle.getNmBrand();
         this.nmModel = vehicle.getNmModel();
         this.nmColor = vehicle.getNmColor();
@@ -36,8 +36,8 @@ public class VehicleDto {
         return vehicle.stream().map(VehicleDto::new).collect(Collectors.toList());
     }
 
-    public Long getIdVehicle() {
-        return idVehicle;
+    public Long getId() {
+        return id;
     }
 
     public String getNmBrand() {

@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class CompanyDto {
-    private Long idCompany;
+    private Long id;
 
     private String nmCompany;
 
@@ -21,7 +21,7 @@ public class CompanyDto {
     private int qtVacanciesCar;
 
     public CompanyDto(Company company) {
-        this.idCompany = company.getIdCompany();
+        this.id = company.getId();
         this.nmCompany = company.getNmCompany();
         this.cdCnpj = company.getCdCnpj();
         this.nmAddress = company.getNmAddress();
@@ -34,8 +34,8 @@ public class CompanyDto {
         return company.stream().map(CompanyDto::new).collect(Collectors.toList());
     }
 
-    public Long getIdCompany() {
-        return idCompany;
+    public Long getId() {
+        return id;
     }
 
     public String getNmCompany() {

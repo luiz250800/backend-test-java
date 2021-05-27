@@ -2,9 +2,14 @@ package br.com.testefcamara.backendtestjava.models;
 
 import br.com.testefcamara.backendtestjava.enums.TypeVehicle;
 
+import javax.persistence.*;
+
+@Entity
 public class Vehicle {
 
-    private Long idVehicle;
+    @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    private Long id;
 
     private String nmBrand;
 
@@ -14,12 +19,14 @@ public class Vehicle {
 
     private String nrBoard;
 
+    @Enumerated(EnumType.STRING)
     private TypeVehicle tpVehicle;
 
+    @ManyToOne
     private Company company;
 
-    public Vehicle(Long idVehicle, String nmBrand, String nmModel, String nmColor, String nrBoard, TypeVehicle tpVehicle, Company company) {
-        this.idVehicle = idVehicle;
+    public Vehicle(Long id, String nmBrand, String nmModel, String nmColor, String nrBoard, TypeVehicle tpVehicle, Company company) {
+        this.id = id;
         this.nmBrand = nmBrand;
         this.nmModel = nmModel;
         this.nmColor = nmColor;
@@ -28,12 +35,12 @@ public class Vehicle {
         this.company = company;
     }
 
-    public Long getIdVehicle() {
-        return idVehicle;
+    public Long getId() {
+        return id;
     }
 
-    public void setIdVehicle(Long idVehicle) {
-        this.idVehicle = idVehicle;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getNmBrand() {
