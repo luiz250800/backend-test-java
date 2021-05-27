@@ -9,8 +9,8 @@ import java.util.Arrays;
 import java.util.List;
 
 @RestController
+@RequestMapping("/api")
 public class CompanyController {
-
     @RequestMapping("/company")
     public List<CompanyDto> listAll(){
         return CompanyDto.converter(Arrays.asList());

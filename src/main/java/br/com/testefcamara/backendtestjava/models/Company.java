@@ -1,8 +1,16 @@
 package br.com.testefcamara.backendtestjava.models;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
 public class Company {
 
-    private Long idCompany;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     private String nmCompany;
 
@@ -16,8 +24,8 @@ public class Company {
 
     private int qtVacanciesCar;
 
-    public Company(Long idCompany, String nmCompany, String cdCnpj, String nmAddress, String nrPhone, int qtVacanciesMotorcycle, int qtVacanciesCar) {
-        this.idCompany = idCompany;
+    public Company(Long id, String nmCompany, String cdCnpj, String nmAddress, String nrPhone, int qtVacanciesMotorcycle, int qtVacanciesCar) {
+        this.id = id;
         this.nmCompany = nmCompany;
         this.cdCnpj = cdCnpj;
         this.nmAddress = nmAddress;
@@ -26,12 +34,12 @@ public class Company {
         this.qtVacanciesCar = qtVacanciesCar;
     }
 
-    public Long getIdCompany() {
-        return idCompany;
+    public Long getId() {
+        return id;
     }
 
-    public void setIdCompany(Long idCompany) {
-        this.idCompany = idCompany;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getNmCompany() {
