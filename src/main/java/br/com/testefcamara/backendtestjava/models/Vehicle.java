@@ -2,7 +2,7 @@ package br.com.testefcamara.backendtestjava.models;
 
 import br.com.testefcamara.backendtestjava.enums.TypeVehicle;
 
-public class Veiculo {
+public class Vehicle {
 
     private Long idVehicle;
 
@@ -14,9 +14,19 @@ public class Veiculo {
 
     private String nrBoard;
 
-    private TypeVehicle TpVehicle;
+    private TypeVehicle tpVehicle;
 
     private Company company;
+
+    public Vehicle(Long idVehicle, String nmBrand, String nmModel, String nmColor, String nrBoard, TypeVehicle tpVehicle, Company company) {
+        this.idVehicle = idVehicle;
+        this.nmBrand = nmBrand;
+        this.nmModel = nmModel;
+        this.nmColor = nmColor;
+        this.nrBoard = nrBoard;
+        this.tpVehicle = tpVehicle;
+        this.company = company;
+    }
 
     public Long getIdVehicle() {
         return idVehicle;
@@ -59,11 +69,11 @@ public class Veiculo {
     }
 
     public TypeVehicle getTpVehicle() {
-        return TpVehicle;
+        return tpVehicle;
     }
 
     public void setTpVehicle(TypeVehicle tpVehicle) {
-        TpVehicle = tpVehicle;
+        this.tpVehicle = tpVehicle;
     }
 
     public Company getCompany() {
