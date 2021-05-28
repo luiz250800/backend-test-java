@@ -1,9 +1,8 @@
 package br.com.testefcamara.backendtestjava.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import com.sun.istack.NotNull;
+
+import javax.persistence.*;
 
 @Entity
 public class Company {
@@ -12,16 +11,22 @@ public class Company {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private String nmCompany;
 
+    @Column(nullable = false, unique = true)
     private String cdCnpj;
 
+    @Column(nullable = false)
     private String nmAddress;
 
+    @Column(nullable = false)
     private String nrPhone;
 
+    @Column(nullable = false)
     private int qtVacanciesMotorcycle;
 
+    @Column(nullable = false)
     private int qtVacanciesCar;
 
     public Company (){

@@ -16,7 +16,7 @@ public class VehicleDto {
 
     private String nmColor;
 
-    private String nrBoard;
+    private String nrPlate;
 
     private TypeVehicle tpVehicle;
 
@@ -27,7 +27,7 @@ public class VehicleDto {
         this.nmBrand = vehicle.getNmBrand();
         this.nmModel = vehicle.getNmModel();
         this.nmColor = vehicle.getNmColor();
-        this.nrBoard = vehicle.getNrBoard();
+        this.nrPlate = vehicle.getNrPlate();
         this.tpVehicle = vehicle.getTpVehicle();
         this.company = company;
     }
@@ -52,8 +52,8 @@ public class VehicleDto {
         return nmColor;
     }
 
-    public String getNrBoard() {
-        return nrBoard;
+    public String getNrPlate() {
+        return nrPlate;
     }
 
     public TypeVehicle getTpVehicle() {

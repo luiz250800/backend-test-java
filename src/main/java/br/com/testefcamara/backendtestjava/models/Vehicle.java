@@ -11,19 +11,36 @@ public class Vehicle {
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Long id;
 
+    @Column(nullable = false)
     private String nmBrand;
 
+    @Column(nullable = false)
     private String nmModel;
 
+    @Column(nullable = false)
     private String nmColor;
 
-    private String nrBoard;
+    @Column(nullable = false)
+    private String nrPlate;
 
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private TypeVehicle tpVehicle;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     private Company company;
+
+    public Vehicle() {
+    }
+
+    public Vehicle( String nmBrand, String nmModel, String nmColor, String nrPlate, TypeVehicle tpVehicle, Company company) {
+        this.nmBrand = nmBrand;
+        this.nmModel = nmModel;
+        this.nmColor = nmColor;
+        this.nrPlate = nrPlate;
+        this.tpVehicle = tpVehicle;
+        this.company = company;
+    }
 
     public Long getId() {
         return id;
@@ -57,12 +74,12 @@ public class Vehicle {
         this.nmColor = nmColor;
     }
 
-    public String getNrBoard() {
-        return nrBoard;
+    public String getNrPlate() {
+        return nrPlate;
     }
 
-    public void setNrBoard(String nrBoard) {
-        this.nrBoard = nrBoard;
+    public void setNrPlate(String nrPlate) {
+        this.nrPlate = nrPlate;
     }
 
     public TypeVehicle getTpVehicle() {
