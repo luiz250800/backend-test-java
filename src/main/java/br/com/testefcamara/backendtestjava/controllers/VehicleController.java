@@ -12,7 +12,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
-import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -31,15 +30,17 @@ public class VehicleController {
         return VehicleDto.converter(vehicle);
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-        public void findById (@PathVariable("id") Long id) {
+    @GetMapping(value = "/{id}")
+    public VehicleDto findById (@PathVariable Long id) {
+        Vehicle vehicle = vehicleRepository.getById(id);
+        return new VehicleDto(vehicle);
     }
 
-    @RequestMapping(value="/registerVehicle", method = RequestMethod.POST)
-    public ResponseEntity<VehicleDto> registerVehicle(@RequestBody @Valid VehicleForm vehicleForm, UriComponentsBuilder uriBuilder){
+    @PostMapping(value="/register")
+    public ResponseEntity<VehicleDto> register(@RequestBody @Valid VehicleForm vehicleForm, UriComponentsBuilder uriBuilder){
         Vehicle vehicle = vehicleForm.converter(companyRepository);
         vehicleRepository.save(vehicle);
-        URI uri = uriBuilder.path("/registerVehicle/{id}").buildAndExpand(vehicle.getId()).toUri();
+        URI uri = uriBuilder.path("/register/{id}").buildAndExpand(vehicle.getId()).toUri();
         return ResponseEntity.created(uri).body(new VehicleDto(vehicle));
     }
 }

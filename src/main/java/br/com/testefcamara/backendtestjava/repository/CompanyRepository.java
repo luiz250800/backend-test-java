@@ -11,5 +11,4 @@ public interface CompanyRepository extends JpaRepository<Company, Long> {
     @Query("SELECT a FROM Company a WHERE a.nmCompany LIKE %:nmCompany%")
     List<Company> findByNmCompanyLike(String nmCompany);
 
-    Company findByNmCompany(String nmCompany);
 }

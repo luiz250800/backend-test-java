@@ -22,11 +22,9 @@ public class VehicleForm {
     @NotNull @NotEmpty
     private String nrPlate;
 
-    @NotNull @NotEmpty
     private TypeVehicle tpVehicle;
 
-    @NotNull @NotEmpty
-    private String nmCompany;
+    private Long idCompany;
 
     public String getNmBrand() { return nmBrand; }
 
@@ -48,8 +46,12 @@ public class VehicleForm {
 
     public void setTpVehicle(TypeVehicle tpVehicle) { this.tpVehicle = tpVehicle; }
 
+    public Long getIdCompany() { return idCompany; }
+
+    public void setIdCompany(Long idCompany) { this.idCompany = idCompany; }
+
     public Vehicle converter(CompanyRepository companyRepository) {
-        Company company = companyRepository.findByNmCompany(nmCompany);
+        Company company = companyRepository.getById(idCompany);
         return new Vehicle(nmBrand, nmModel, nmColor, nrPlate, tpVehicle, company);
     }
 }

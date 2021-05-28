@@ -1,6 +1,7 @@
 package br.com.testefcamara.backendtestjava.form;
 
 import br.com.testefcamara.backendtestjava.models.Company;
+import br.com.testefcamara.backendtestjava.repository.CompanyRepository;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
@@ -65,5 +66,17 @@ public class CompanyForm {
 
     public Company converter() {
         return new Company(nmCompany, cdCnpj, nmAddress, nrPhone, qtVacanciesMotorcycle, qtVacanciesCar);
+    }
+
+    public Company update(Long id, CompanyRepository companyRepository) {
+        Company company = companyRepository.getById(id);
+        company.setNmCompany(this.nmCompany);
+        company.setCdCnpj(this.cdCnpj);
+        company.setNmAddress(this.nmAddress);
+        company.setNrPhone(this.nrPhone);
+        company.setQtVacanciesCar(this.qtVacanciesCar);
+        company.setQtVacanciesMotorcycle(this.qtVacanciesMotorcycle);
+
+        return company;
     }
 }

@@ -29,7 +29,7 @@ public class VehicleDto {
         this.nmColor = vehicle.getNmColor();
         this.nrPlate = vehicle.getNrPlate();
         this.tpVehicle = vehicle.getTpVehicle();
-        this.company = company;
+        this.company = vehicle.getCompany();
     }
 
     public static List<VehicleDto> converter(List<Vehicle> vehicle) {
