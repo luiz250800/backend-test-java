@@ -18,8 +18,12 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/company")
 public class CompanyController {
-    @Autowired
-    private CompanyRepository companyRepository;
+
+    private final CompanyRepository companyRepository;
+
+    public CompanyController(CompanyRepository companyRepository) {
+        this.companyRepository = companyRepository;
+    }
 
     @GetMapping
     public List<CompanyDto> listAll(){
@@ -30,9 +34,8 @@ public class CompanyController {
     @GetMapping(value="/{id}")
     public ResponseEntity<CompanyDto> findById(@PathVariable Long id){
         Optional<Company> company = companyRepository.findById(id);
-        if(company.isPresent()){
+        if(company.isPresent())
             return ResponseEntity.ok(new CompanyDto(company.get()));
-        }
         return ResponseEntity.notFound().build();
     }
 

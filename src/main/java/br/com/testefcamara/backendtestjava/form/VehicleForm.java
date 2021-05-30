@@ -4,6 +4,7 @@ import br.com.testefcamara.backendtestjava.enums.TypeVehicle;
 import br.com.testefcamara.backendtestjava.models.Company;
 import br.com.testefcamara.backendtestjava.models.Vehicle;
 import br.com.testefcamara.backendtestjava.repository.CompanyRepository;
+import br.com.testefcamara.backendtestjava.repository.VehicleRepository;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -22,8 +23,10 @@ public class VehicleForm {
     @NotNull @NotEmpty
     private String nrPlate;
 
+    @NotNull
     private TypeVehicle tpVehicle;
 
+    @NotNull
     private Long idCompany;
 
     public String getNmBrand() { return nmBrand; }
