@@ -1,6 +1,7 @@
 package br.com.testefcamara.backendtestjava.models;
 
 import br.com.testefcamara.backendtestjava.enums.TypeVehicle;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 
@@ -8,32 +9,41 @@ import javax.persistence.*;
 public class Vehicle {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private String nmBrand;
 
+    @Column(nullable = false)
     private String nmModel;
 
+    @Column(nullable = false)
     private String nmColor;
 
-    private String nrBoard;
+    @Column(nullable = false)
+    private String nrPlate;
 
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private TypeVehicle tpVehicle;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     private Company company;
 
-    public Vehicle(Long id, String nmBrand, String nmModel, String nmColor, String nrBoard, TypeVehicle tpVehicle, Company company) {
-        this.id = id;
+    public Vehicle() {
+    }
+
+    public Vehicle( String nmBrand, String nmModel, String nmColor, String nrPlate, TypeVehicle tpVehicle, Company company) {
         this.nmBrand = nmBrand;
         this.nmModel = nmModel;
         this.nmColor = nmColor;
-        this.nrBoard = nrBoard;
+        this.nrPlate = nrPlate;
         this.tpVehicle = tpVehicle;
         this.company = company;
     }
+
+
 
     public Long getId() {
         return id;
@@ -67,12 +77,12 @@ public class Vehicle {
         this.nmColor = nmColor;
     }
 
-    public String getNrBoard() {
-        return nrBoard;
+    public String getNrPlate() {
+        return nrPlate;
     }
 
-    public void setNrBoard(String nrBoard) {
-        this.nrBoard = nrBoard;
+    public void setNrPlate(String nrPlate) {
+        this.nrPlate = nrPlate;
     }
 
     public TypeVehicle getTpVehicle() {
