@@ -1,2 +1,3 @@
 INSERT INTO COMPANY(nm_company, cd_cnpj, nm_address, nr_phone, qt_vacancies_motorcycle, qt_vacancies_car) VALUES ('FCamara', '11.111.111/11111-11', 'Praça dos Expedicionários, 19', '(13) 11111-1111', 10, 20);
 INSERT INTO VEHICLE(nm_brand, nm_color, nm_model, nr_plate, tp_vehicle, company_id) VALUES ('Marca', 'cor', 'modelo', '1421JJJ', 'CAR', 1);
+INSERT INTO USER(nm_email, nm_password) VALUES ('luizr726@gmail.com', '$2a$10$yj0rS2aWMh14fRrEI4A88OwfF1gGHc/1OKlUEhQ8B9.rwL4102VFm');
