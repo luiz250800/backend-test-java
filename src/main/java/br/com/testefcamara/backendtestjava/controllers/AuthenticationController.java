@@ -3,6 +3,7 @@ package br.com.testefcamara.backendtestjava.controllers;
 import br.com.testefcamara.backendtestjava.config.security.TokenService;
 import br.com.testefcamara.backendtestjava.dto.TokenDto;
 import br.com.testefcamara.backendtestjava.form.LoginForm;
+import org.springframework.context.annotation.Profile;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -17,6 +18,7 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/api/auth")
+@Profile("prod")
 public class AuthenticationController {
 
     private final AuthenticationManager authentitcationManager;
