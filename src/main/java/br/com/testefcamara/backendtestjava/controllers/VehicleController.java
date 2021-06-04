@@ -1,6 +1,8 @@
 package br.com.testefcamara.backendtestjava.controllers;
 
 import br.com.testefcamara.backendtestjava.dto.VehicleDto;
+import br.com.testefcamara.backendtestjava.form.CompanyReduceCapacityForm;
+import br.com.testefcamara.backendtestjava.form.VehicleDeleteForm;
 import br.com.testefcamara.backendtestjava.form.VehicleForm;
 import br.com.testefcamara.backendtestjava.form.VehicleUpdateForm;
 import br.com.testefcamara.backendtestjava.models.Vehicle;
@@ -48,7 +50,10 @@ public class VehicleController {
     @Transactional
     public ResponseEntity<VehicleDto> register(@RequestBody @Valid VehicleForm vehicleForm, UriComponentsBuilder uriBuilder) {
         Vehicle vehicle = vehicleForm.converter(companyRepository);
-        vehicleRepository.save(vehicle);
+        Vehicle vehicleSave = vehicleRepository.save(vehicle);
+
+        CompanyReduceCapacityForm.registerCompanyVehicle(companyRepository, vehicleForm.getIdCompany(), vehicleSave.getTpVehicle());
+
         URI uri = uriBuilder.path("/register/{id}").buildAndExpand(vehicle.getId()).toUri();
         return ResponseEntity.created(uri).body(new VehicleDto(vehicle));
     }
@@ -69,8 +74,8 @@ public class VehicleController {
     public ResponseEntity<?> delete(@PathVariable Long id) {
         Optional<Vehicle> optionalVehicle = vehicleRepository.findById(id);
         if (optionalVehicle.isPresent()) {
-            vehicleRepository.deleteById(id);
-            return ResponseEntity.ok().build();
+            Vehicle vehicle = VehicleDeleteForm.deletedAt(id, vehicleRepository);
+            return ResponseEntity.ok(new VehicleDto(vehicle));
         }
         return ResponseEntity.notFound().build();
     }
