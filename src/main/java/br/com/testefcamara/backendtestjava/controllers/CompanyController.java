@@ -4,7 +4,6 @@ import br.com.testefcamara.backendtestjava.dto.CompanyDto;
 import br.com.testefcamara.backendtestjava.form.CompanyForm;
 import br.com.testefcamara.backendtestjava.models.Company;
 import br.com.testefcamara.backendtestjava.repository.CompanyRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;

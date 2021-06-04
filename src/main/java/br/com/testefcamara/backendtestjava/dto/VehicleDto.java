@@ -4,6 +4,7 @@ import br.com.testefcamara.backendtestjava.enums.TypeVehicle;
 import br.com.testefcamara.backendtestjava.models.Company;
 import br.com.testefcamara.backendtestjava.models.Vehicle;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,6 +23,10 @@ public class VehicleDto {
 
     private Company company;
 
+    private LocalDateTime created_at;
+
+    private LocalDateTime deleted_at;
+
     public VehicleDto(Vehicle vehicle) {
         this.id = vehicle.getId();
         this.nmBrand = vehicle.getNmBrand();
@@ -30,6 +35,8 @@ public class VehicleDto {
         this.nrPlate = vehicle.getNrPlate();
         this.tpVehicle = vehicle.getTpVehicle();
         this.company = vehicle.getCompany();
+        this.created_at = vehicle.getCreated_at();
+        this.deleted_at = vehicle.getDeleted_at();
     }
 
     public static List<VehicleDto> converter(List<Vehicle> vehicle) {
@@ -62,5 +69,13 @@ public class VehicleDto {
 
     public Company getCompany() {
         return company;
+    }
+
+    public LocalDateTime getCreated_at() {
+        return created_at;
+    }
+
+    public LocalDateTime getDeleted_at() {
+        return deleted_at;
     }
 }
