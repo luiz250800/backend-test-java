@@ -1,5 +1,6 @@
 package br.com.testefcamara.backendtestjava.controllers;
 
+import br.com.testefcamara.backendtestjava.dto.FlowCompanyVehicleDto;
 import br.com.testefcamara.backendtestjava.dto.VehicleDto;
 import br.com.testefcamara.backendtestjava.form.FlowCompanyVehicleForm;
 import br.com.testefcamara.backendtestjava.models.Company;
@@ -29,11 +30,11 @@ public class FlowCompanyVehicleController {
     }
 
     @GetMapping(value = "/{idCompany}")
-    public Page<VehicleDto> flowCampanyVehicle(@PathVariable Long idCompany, @RequestBody FlowCompanyVehicleForm flowCompanyVehicleForm, Pageable pageable) {
+    public Page<FlowCompanyVehicleDto> flowCampanyVehicle(@PathVariable Long idCompany, @RequestBody FlowCompanyVehicleForm flowCompanyVehicleForm, Pageable pageable) {
         Optional<Company> optionalCompany = companyRepository.findById(idCompany);
         if(optionalCompany.isPresent()){
             Page<Vehicle> vehicles = vehicleRepository.findVehicleByCompanyAndDateInterval(optionalCompany.get(), flowCompanyVehicleForm.getDhStart(), flowCompanyVehicleForm.getDhEnd(), pageable);
-            return VehicleDto.converter(vehicles);
+            return FlowCompanyVehicleDto.converter(vehicles);
         }
         throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Código do estabelecimento não encontrado.");
     }
