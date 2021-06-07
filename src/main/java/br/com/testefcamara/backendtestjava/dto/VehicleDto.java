@@ -3,6 +3,7 @@ package br.com.testefcamara.backendtestjava.dto;
 import br.com.testefcamara.backendtestjava.enums.TypeVehicle;
 import br.com.testefcamara.backendtestjava.models.Company;
 import br.com.testefcamara.backendtestjava.models.Vehicle;
+import org.springframework.data.domain.Page;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -39,8 +40,8 @@ public class VehicleDto {
         this.deleted_at = vehicle.getDeleted_at();
     }
 
-    public static List<VehicleDto> converter(List<Vehicle> vehicle) {
-        return vehicle.stream().map(VehicleDto::new).collect(Collectors.toList());
+    public static Page<VehicleDto> converter(Page<Vehicle> vehicle) {
+        return vehicle.map(VehicleDto::new);
     }
 
     public Long getId() {
