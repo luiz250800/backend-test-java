@@ -1,11 +1,15 @@
 package br.com.testefcamara.backendtestjava.form;
 
+import br.com.testefcamara.backendtestjava.models.User;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
-public class LoginForm {
+public class UserForm {
+
     @NotNull @NotEmpty
     private String nmEmail;
 
@@ -28,7 +32,13 @@ public class LoginForm {
         this.nmPassword = nmPassword;
     }
 
-    public UsernamePasswordAuthenticationToken converter() {
-        return new UsernamePasswordAuthenticationToken(nmEmail, nmPassword);
+    public User converter() {
+        User user = new User();
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
+        user.setNmEmail(nmEmail);
+        user.setNmPassword(passwordEncoder.encode(nmPassword));
+
+        return user;
     }
 }
