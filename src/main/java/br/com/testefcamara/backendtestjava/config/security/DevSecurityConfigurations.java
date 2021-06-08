@@ -25,4 +25,10 @@ public class DevSecurityConfigurations extends WebSecurityConfigurerAdapter {
                 .antMatchers("/**").permitAll()
                 .and().csrf().disable();
     }
+
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring()
+                .antMatchers("/**.html","/**.do", "/v2/api-docs", "/webjars/**", "/configuration/**", "/swagger-resources/**", "/h2-console/**");
+    }
 }
