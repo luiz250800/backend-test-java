@@ -1,19 +1,26 @@
 package br.com.testefcamara.backendtestjava.controllers;
 
 import br.com.testefcamara.backendtestjava.dto.VehicleDto;
-import br.com.testefcamara.backendtestjava.form.VehicleForm;
-import br.com.testefcamara.backendtestjava.form.VehicleUpdateForm;
+import br.com.testefcamara.backendtestjava.form.*;
+import br.com.testefcamara.backendtestjava.models.Company;
 import br.com.testefcamara.backendtestjava.models.Vehicle;
 import br.com.testefcamara.backendtestjava.repository.CompanyRepository;
 import br.com.testefcamara.backendtestjava.repository.VehicleRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.net.URI;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,12 +37,6 @@ public class VehicleController {
         this.companyRepository = companyRepository;
     }
 
-    @GetMapping
-    public List<VehicleDto> listAll() {
-        List<Vehicle> vehicle = vehicleRepository.findAll();
-        return VehicleDto.converter(vehicle);
-    }
-
     @GetMapping(value = "/{id}")
     public ResponseEntity<VehicleDto> findById(@PathVariable Long id) {
         Optional<Vehicle> vehicle = vehicleRepository.findById(id);
@@ -48,7 +49,10 @@ public class VehicleController {
     @Transactional
     public ResponseEntity<VehicleDto> register(@RequestBody @Valid VehicleForm vehicleForm, UriComponentsBuilder uriBuilder) {
         Vehicle vehicle = vehicleForm.converter(companyRepository);
-        vehicleRepository.save(vehicle);
+        Vehicle vehicleSave = vehicleRepository.save(vehicle);
+
+        CompanyReduceCapacityForm.registerCompanyVehicle(companyRepository, vehicleForm.getIdCompany(), vehicleSave.getTpVehicle());
+
         URI uri = uriBuilder.path("/register/{id}").buildAndExpand(vehicle.getId()).toUri();
         return ResponseEntity.created(uri).body(new VehicleDto(vehicle));
     }
@@ -69,8 +73,8 @@ public class VehicleController {
     public ResponseEntity<?> delete(@PathVariable Long id) {
         Optional<Vehicle> optionalVehicle = vehicleRepository.findById(id);
         if (optionalVehicle.isPresent()) {
-            vehicleRepository.deleteById(id);
-            return ResponseEntity.ok().build();
+            Vehicle vehicle = VehicleDeleteForm.deletedAt(id, vehicleRepository);
+            return ResponseEntity.ok(new VehicleDto(vehicle));
         }
         return ResponseEntity.notFound().build();
     }
