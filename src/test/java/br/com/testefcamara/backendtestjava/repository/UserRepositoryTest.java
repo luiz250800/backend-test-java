@@ -1,5 +1,6 @@
 package br.com.testefcamara.backendtestjava.repository;
 
+import br.com.testefcamara.backendtestjava.form.UserForm;
 import br.com.testefcamara.backendtestjava.models.User;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -27,4 +28,5 @@ public class UserRepositoryTest {
         Optional<User> user = userRepository.findByNmEmail("abc@gmail.com");
         Assertions.assertEquals(Optional.empty() , user);
     }
+
 }
