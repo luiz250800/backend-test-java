@@ -16,9 +16,13 @@ public class CompanyDto {
 
     private String nrPhone;
 
-    private int qtVacanciesMotorcycle;
+    private int qtTotalVacanciesMotorcycle;
 
-    private int qtVacanciesCar;
+    private int qtTotalVacanciesCar;
+
+    private int qtVacanciesFilledMotorcycle;
+
+    private int qtVacanciesFilledCar;
 
     public CompanyDto(Company company) {
         this.id = company.getId();
@@ -26,12 +30,10 @@ public class CompanyDto {
         this.cdCnpj = company.getCdCnpj();
         this.nmAddress = company.getNmAddress();
         this.nrPhone = company.getNrPhone();
-        this.qtVacanciesMotorcycle = company.getQtVacanciesMotorcycle();
-        this.qtVacanciesCar = company.getQtVacanciesCar();
-    }
-
-    public static List<CompanyDto> converter(List<Company> company) {
-        return company.stream().map(CompanyDto::new).collect(Collectors.toList());
+        this.qtTotalVacanciesMotorcycle = company.getQtTotalVacanciesMotorcycle();
+        this.qtTotalVacanciesCar = company.getQtTotalVacanciesCar();
+        this.qtVacanciesFilledMotorcycle = company.getQtVacanciesFilledMotorcycle();
+        this.qtVacanciesFilledCar = company.getQtVacanciesFilledCar();
     }
 
     public Long getId() {
@@ -54,11 +56,24 @@ public class CompanyDto {
         return nrPhone;
     }
 
-    public int getQtVacanciesMotorcycle() {
-        return qtVacanciesMotorcycle;
+    public int getQtTotalVacanciesMotorcycle() {
+        return qtTotalVacanciesMotorcycle;
     }
 
-    public int getQtVacanciesCar() {
-        return qtVacanciesCar;
+    public int getQtTotalVacanciesCar() {
+        return qtTotalVacanciesCar;
     }
+
+    public int getQtVacanciesFilledMotorcycle() {
+        return qtVacanciesFilledMotorcycle;
+    }
+
+    public int getQtVacanciesFilledCar() {
+        return qtVacanciesFilledCar;
+    }
+
+    public static List<CompanyDto> converter(List<Company> company) {
+        return company.stream().map(CompanyDto::new).collect(Collectors.toList());
+    }
+
 }

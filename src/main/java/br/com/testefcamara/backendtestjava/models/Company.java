@@ -1,7 +1,5 @@
 package br.com.testefcamara.backendtestjava.models;
 
-import com.sun.istack.NotNull;
-
 import javax.persistence.*;
 
 @Entity
@@ -24,22 +22,28 @@ public class Company {
     private String nrPhone;
 
     @Column(nullable = false)
-    private int qtVacanciesMotorcycle;
+    private int qtTotalVacanciesMotorcycle;
 
     @Column(nullable = false)
-    private int qtVacanciesCar;
+    private int qtTotalVacanciesCar;
+
+    @Column(nullable = false)
+    private int qtVacanciesFilledMotorcycle = 0;
+
+    @Column(nullable = false)
+    private int qtVacanciesFilledCar = 0;
 
     public Company (){
 
     }
 
-    public Company(String nmCompany, String cdCnpj, String nmAddress, String nrPhone, int qtVacanciesMotorcycle, int qtVacanciesCar) {
+    public Company(String nmCompany, String cdCnpj, String nmAddress, String nrPhone, int qtTotalVacanciesMotorcycle, int qtTotalVacanciesCar) {
         this.nmCompany = nmCompany;
         this.cdCnpj = cdCnpj;
         this.nmAddress = nmAddress;
         this.nrPhone = nrPhone;
-        this.qtVacanciesMotorcycle = qtVacanciesMotorcycle;
-        this.qtVacanciesCar = qtVacanciesCar;
+        this.qtTotalVacanciesMotorcycle = qtTotalVacanciesMotorcycle;
+        this.qtTotalVacanciesCar = qtTotalVacanciesCar;
     }
 
     public Long getId() {
@@ -70,7 +74,9 @@ public class Company {
         return nmAddress;
     }
 
-    public void setNmAddress(String nmAddress) { this.nmAddress = nmAddress; }
+    public void setNmAddress(String nmAddress) {
+        this.nmAddress = nmAddress;
+    }
 
     public String getNrPhone() {
         return nrPhone;
@@ -80,17 +86,35 @@ public class Company {
         this.nrPhone = nrPhone;
     }
 
-    public int getQtVacanciesMotorcycle() {
-        return qtVacanciesMotorcycle;
+    public int getQtTotalVacanciesMotorcycle() {
+        return qtTotalVacanciesMotorcycle;
     }
 
-    public void setQtVacanciesMotorcycle(int qtVacanciesMotorcycle) { this.qtVacanciesMotorcycle = qtVacanciesMotorcycle; }
-
-    public int getQtVacanciesCar() {
-        return qtVacanciesCar;
+    public void setQtTotalVacanciesMotorcycle(int qtTotalVacanciesMotorcycle) {
+        this.qtTotalVacanciesMotorcycle = qtTotalVacanciesMotorcycle;
     }
 
-    public void setQtVacanciesCar(int qtVacanciesCar) {
-        this.qtVacanciesCar = qtVacanciesCar;
+    public int getQtTotalVacanciesCar() {
+        return qtTotalVacanciesCar;
+    }
+
+    public void setQtTotalVacanciesCar(int qtTotalVacanciesCar) {
+        this.qtTotalVacanciesCar = qtTotalVacanciesCar;
+    }
+
+    public int getQtVacanciesFilledMotorcycle() {
+        return qtVacanciesFilledMotorcycle;
+    }
+
+    public void setQtVacanciesFilledMotorcycle(int qtVacanciesMotorcycle) {
+        this.qtVacanciesFilledMotorcycle = qtVacanciesMotorcycle;
+    }
+
+    public int getQtVacanciesFilledCar() {
+        return qtVacanciesFilledCar;
+    }
+
+    public void setQtVacanciesFilledCar(int qtVacanciesCar) {
+        this.qtVacanciesFilledCar = qtVacanciesCar;
     }
 }
