@@ -1,2 +1,2 @@
-INSERT INTO COMPANY(nm_company, cd_cnpj, nm_address, nr_phone, qt_vacancies_motorcycle, qt_vacancies_car) VALUES ('FCamara', '11.111.111/11111-11', 'Praça dos Expedicionários, 19', '(13) 11111-1111', 3, 3);
+INSERT INTO COMPANY(nm_company, cd_cnpj, nm_address, nr_phone, qt_total_vacancies_motorcycle, qt_total_vacancies_car, qt_vacancies_filled_motorcycle, qt_vacancies_filled_car) VALUES ('FCamara', '11.111.111/11111-11', 'Praça dos Expedicionários, 19', '(13) 11111-1111', 10, 10, 8, 8);
 INSERT INTO USER(nm_email, nm_password) VALUES ('admin@gmail.com', '$2b$10$0IUEt1LVGXMqpPDCG1hAZua5KlmHjxy1MkkK///YWeOCT3l7NQZS.');
