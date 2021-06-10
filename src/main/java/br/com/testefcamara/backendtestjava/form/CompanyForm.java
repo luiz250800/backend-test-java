@@ -80,9 +80,9 @@ public class CompanyForm {
         Company company = companyRepository.getById(id);
 
         if (this.qtTotalVacanciesMotorcycle - company.getQtVacanciesFilledMotorcycle() < 0)
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Não é possível reduzir a este número de vagas para moto pois já estão ocupadas " + company.getQtVacanciesFilledMotorcycle() + " de " + company.getQtTotalVacanciesMotorcycle());
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Não é possível reduzir a este número de vagas para moto pois já estão ocupadas " + company.getQtVacanciesFilledMotorcycle() + " de " + company.getQtTotalVacanciesMotorcycle() + " vagas.");
         if (this.qtTotalVacanciesCar - company.getQtVacanciesFilledCar() < 0)
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Não é possível reduzir a este número de vagas para carro pois já estão ocupadas " + company.getQtVacanciesFilledCar() + " de " + company.getQtTotalVacanciesCar());
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Não é possível reduzir a este número de vagas para carro pois já estão ocupadas " + company.getQtVacanciesFilledCar() + " de " + company.getQtTotalVacanciesCar() + " vagas.");
 
         company.setNmCompany(this.nmCompany);
         company.setCdCnpj(this.cdCnpj);
