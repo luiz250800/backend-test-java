@@ -8,8 +8,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public interface VehicleRepository extends JpaRepository<Vehicle, Long> {
     @Query("SELECT a FROM Vehicle a WHERE a.company=:company AND a.created_at BETWEEN :dhStart and :dhEnd")
-    Page<Vehicle> findVehicleByCompanyAndDateInterval(Company company, LocalDateTime dhStart, LocalDateTime dhEnd, Pageable pageable);
+    List<Vehicle> findVehicleByCompanyAndDateInterval(Company company, LocalDateTime dhStart, LocalDateTime dhEnd);
 }
