@@ -21,9 +21,6 @@ public class VehicleUpdateForm {
     @NotNull @NotEmpty
     private String nrPlate;
 
-    @NotNull
-    private TypeVehicle tpVehicle;
-
     public String getNmBrand() {
         return nmBrand;
     }
@@ -56,14 +53,6 @@ public class VehicleUpdateForm {
         this.nrPlate = nrPlate;
     }
 
-    public TypeVehicle getTpVehicle() {
-        return tpVehicle;
-    }
-
-    public void setTpVehicle(TypeVehicle tpVehicle) {
-        this.tpVehicle = tpVehicle;
-    }
-
     public Vehicle update(Long id, VehicleRepository vehicleRepository) {
         Vehicle vehicle = vehicleRepository.getById(id);
 
@@ -71,7 +60,6 @@ public class VehicleUpdateForm {
         vehicle.setNmModel(this.nmModel);
         vehicle.setNmColor(this.nmColor);
         vehicle.setNrPlate(this.nrPlate);
-        vehicle.setTpVehicle(this.tpVehicle);
 
         return vehicle;
     }
