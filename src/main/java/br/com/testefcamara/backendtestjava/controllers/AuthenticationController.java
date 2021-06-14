@@ -8,6 +8,7 @@ import br.com.testefcamara.backendtestjava.form.UserFormUpdate;
 import br.com.testefcamara.backendtestjava.models.User;
 import br.com.testefcamara.backendtestjava.repository.UserRepository;
 import org.springframework.context.annotation.Profile;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -21,7 +22,7 @@ import javax.validation.Valid;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping(value = "/api/auth", produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 @Profile("prod")
 public class AuthenticationController {
 

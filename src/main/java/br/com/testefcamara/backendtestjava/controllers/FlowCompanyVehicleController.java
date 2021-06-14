@@ -8,6 +8,7 @@ import br.com.testefcamara.backendtestjava.models.Vehicle;
 import br.com.testefcamara.backendtestjava.repository.CompanyRepository;
 import br.com.testefcamara.backendtestjava.repository.VehicleRepository;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -15,7 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping(value = "/api/flowCampanyVehicle", produces = { "application/json", "application/xml" })
+@RequestMapping(value = "/api/flowCampanyVehicle", produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 public class FlowCompanyVehicleController {
 
     private final CompanyRepository companyRepository;
