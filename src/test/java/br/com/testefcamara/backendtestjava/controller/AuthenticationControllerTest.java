@@ -25,7 +25,7 @@ public class AuthenticationControllerTest {
     private String uriProject;
 
     @Test
-    public void testaBadRequestComDadosIncorretos() throws Exception {
+    public void testaLoginComDadosIncorretos() throws Exception {
         URI uri = new URI(uriProject + "api/auth");
         String json = "{\"nmEmail\":\"emailInvalido@gmail.com\",\"nmPassword\":\"abc123\"}";
 
@@ -35,9 +35,9 @@ public class AuthenticationControllerTest {
     }
 
     @Test
-    public void testaBadRequestComDadosCorretos() throws Exception {
+    public void testaLoginComDadosCorretos() throws Exception {
         URI uri = new URI(uriProject + "api/auth");
-        String json = "{\"nmEmail\":\"luizr726@gmail.com\",\"nmPassword\":\"luiz25\"}";
+        String json = "{\"nmEmail\":\"admin@gmail.com\",\"nmPassword\":\"admin123\"}";
 
         mockMvc.perform(MockMvcRequestBuilders.post(uri)
                 .content(json).contentType(MediaType.APPLICATION_JSON))
