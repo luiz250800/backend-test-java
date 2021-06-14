@@ -39,7 +39,6 @@ public class VehicleUpdateFormTest {
         vehicleUpdateForm.setNmModel("Esportivo 2");
         vehicleUpdateForm.setNmColor("preto 2");
         vehicleUpdateForm.setNrPlate("hgb2004 2");
-        vehicleUpdateForm.setTpVehicle(TypeVehicle.CAR);
 
         Vehicle vehicleUpdate = vehicleUpdateForm.update(1L, vehicleRepository);
 
