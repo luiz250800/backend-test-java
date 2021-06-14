@@ -4,7 +4,6 @@ import br.com.testefcamara.backendtestjava.enums.TypeVehicle;
 import br.com.testefcamara.backendtestjava.models.Company;
 import br.com.testefcamara.backendtestjava.models.Vehicle;
 import br.com.testefcamara.backendtestjava.repository.CompanyRepository;
-import br.com.testefcamara.backendtestjava.repository.VehicleRepository;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;

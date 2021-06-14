@@ -2,6 +2,8 @@ package br.com.testefcamara.backendtestjava.form;
 
 import br.com.testefcamara.backendtestjava.models.Company;
 import br.com.testefcamara.backendtestjava.repository.CompanyRepository;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
@@ -18,13 +20,17 @@ public class CompanyForm {
     @Pattern(regexp = "\\(\\d{2}\\)\\s\\d{4,5}\\-\\d{4}")
     private String nrPhone;
     @Min(1)
-    private int qtVacanciesMotorcycle;
+    private int qtTotalVacanciesMotorcycle;
     @Min(1)
-    private int qtVacanciesCar;
+    private int qtTotalVacanciesCar;
 
-    public String getNmCompany() { return nmCompany; }
+    public String getNmCompany() {
+        return nmCompany;
+    }
 
-    public void setNmCompany(String nmCompany) { this.nmCompany = nmCompany; }
+    public void setNmCompany(String nmCompany) {
+        this.nmCompany = nmCompany;
+    }
 
     public String getCdCnpj() {
         return cdCnpj;
@@ -50,32 +56,40 @@ public class CompanyForm {
         this.nrPhone = nrPhone;
     }
 
-    public int getQtVacanciesMotorcycle() {
-        return qtVacanciesMotorcycle;
+    public int getQtTotalVacanciesMotorcycle() {
+        return qtTotalVacanciesMotorcycle;
     }
 
-    public void setQtVacanciesMotorcycle(int qtVacanciesMotorcycle) { this.qtVacanciesMotorcycle = qtVacanciesMotorcycle; }
-
-    public int getQtVacanciesCar() {
-        return qtVacanciesCar;
+    public void setQtTotalVacanciesMotorcycle(int qtTotalVacanciesMotorcycle) {
+        this.qtTotalVacanciesMotorcycle = qtTotalVacanciesMotorcycle;
     }
 
-    public void setQtVacanciesCar(int qtVacanciesCar) {
-        this.qtVacanciesCar = qtVacanciesCar;
+    public int getQtTotalVacanciesCar() {
+        return qtTotalVacanciesCar;
+    }
+
+    public void setQtTotalVacanciesCar(int qtTotalVacanciesCar) {
+        this.qtTotalVacanciesCar = qtTotalVacanciesCar;
     }
 
     public Company converter() {
-        return new Company(nmCompany, cdCnpj, nmAddress, nrPhone, qtVacanciesMotorcycle, qtVacanciesCar);
+        return new Company(nmCompany, cdCnpj, nmAddress, nrPhone, qtTotalVacanciesMotorcycle, qtTotalVacanciesCar);
     }
 
     public Company update(Long id, CompanyRepository companyRepository) {
         Company company = companyRepository.getById(id);
+
+        if (this.qtTotalVacanciesMotorcycle - company.getQtVacanciesFilledMotorcycle() < 0)
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Não é possível reduzir a este número de vagas para moto pois já estão ocupadas " + company.getQtVacanciesFilledMotorcycle() + " de " + company.getQtTotalVacanciesMotorcycle() + " vagas.");
+        if (this.qtTotalVacanciesCar - company.getQtVacanciesFilledCar() < 0)
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Não é possível reduzir a este número de vagas para carro pois já estão ocupadas " + company.getQtVacanciesFilledCar() + " de " + company.getQtTotalVacanciesCar() + " vagas.");
+
         company.setNmCompany(this.nmCompany);
         company.setCdCnpj(this.cdCnpj);
         company.setNmAddress(this.nmAddress);
         company.setNrPhone(this.nrPhone);
-        company.setQtVacanciesCar(this.qtVacanciesCar);
-        company.setQtVacanciesMotorcycle(this.qtVacanciesMotorcycle);
+        company.setQtTotalVacanciesCar(this.qtTotalVacanciesCar);
+        company.setQtTotalVacanciesMotorcycle(this.qtTotalVacanciesMotorcycle);
 
         return company;
     }

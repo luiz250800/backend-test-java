@@ -2,8 +2,11 @@ package br.com.testefcamara.backendtestjava.models;
 
 import br.com.testefcamara.backendtestjava.enums.TypeVehicle;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 public class Vehicle {
@@ -29,12 +32,17 @@ public class Vehicle {
     private TypeVehicle tpVehicle;
 
     @ManyToOne(optional = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Company company;
+
+    private LocalDateTime created_at = LocalDateTime.now();
+
+    private LocalDateTime deleted_at;
 
     public Vehicle() {
     }
 
-    public Vehicle( String nmBrand, String nmModel, String nmColor, String nrPlate, TypeVehicle tpVehicle, Company company) {
+    public Vehicle(String nmBrand, String nmModel, String nmColor, String nrPlate, TypeVehicle tpVehicle, Company company) {
         this.nmBrand = nmBrand;
         this.nmModel = nmModel;
         this.nmColor = nmColor;
@@ -42,8 +50,6 @@ public class Vehicle {
         this.tpVehicle = tpVehicle;
         this.company = company;
     }
-
-
 
     public Long getId() {
         return id;
@@ -99,5 +105,17 @@ public class Vehicle {
 
     public void setCompany(Company company) {
         this.company = company;
+    }
+
+    public LocalDateTime getCreated_at() {
+        return created_at;
+    }
+
+    public LocalDateTime getDeleted_at() {
+        return deleted_at;
+    }
+
+    public void setDeleted_at(LocalDateTime deleted_at) {
+        this.deleted_at = deleted_at;
     }
 }
