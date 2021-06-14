@@ -4,6 +4,7 @@ import br.com.testefcamara.backendtestjava.dto.CompanyDto;
 import br.com.testefcamara.backendtestjava.form.CompanyForm;
 import br.com.testefcamara.backendtestjava.models.Company;
 import br.com.testefcamara.backendtestjava.repository.CompanyRepository;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -15,7 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/company")
+@RequestMapping(value = "/api/company", produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 public class CompanyController {
 
     private final CompanyRepository companyRepository;
