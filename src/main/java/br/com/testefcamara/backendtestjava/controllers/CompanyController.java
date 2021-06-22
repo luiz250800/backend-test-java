@@ -4,9 +4,12 @@ import br.com.testefcamara.backendtestjava.dto.CompanyDto;
 import br.com.testefcamara.backendtestjava.form.CompanyForm;
 import br.com.testefcamara.backendtestjava.models.Company;
 import br.com.testefcamara.backendtestjava.repository.CompanyRepository;
+import javassist.NotFoundException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.transaction.Transactional;
@@ -32,11 +35,11 @@ public class CompanyController {
     }
 
     @GetMapping(value="/{id}")
-    public ResponseEntity<CompanyDto> findById(@PathVariable Long id){
+    public ResponseEntity<CompanyDto> findById(@PathVariable Long id) {
         Optional<Company> company = companyRepository.findById(id);
         if(company.isPresent())
             return ResponseEntity.ok(new CompanyDto(company.get()));
-        return ResponseEntity.notFound().build();
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Estabelecimento não encontrado.");
     }
 
     @PostMapping(value="/register")
