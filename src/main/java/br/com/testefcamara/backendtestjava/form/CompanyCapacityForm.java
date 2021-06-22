@@ -12,41 +12,32 @@ public class CompanyCapacityForm {
 
         if (TypeVehicle.CAR.equals(typeVehicle)){
             int qtFreeVacanciesCar = company.getQtTotalVacanciesCar() - company.getQtVacanciesFilledCar();
-
-            if(qtFreeVacanciesCar > 0) {
-                company.setQtVacanciesFilledCar(company.getQtVacanciesFilledCar() + 1);
-            } else {
+            if (qtFreeVacanciesCar <= 0) {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Todas as vagas de carro foram ocupadas!");
             }
-        } else {
-            int qtFreeVacanciesMotorcycle = company.getQtTotalVacanciesMotorcycle() - company.getQtVacanciesFilledMotorcycle();
-
-            if(qtFreeVacanciesMotorcycle > 0) {
-                company.setQtVacanciesFilledMotorcycle(company.getQtVacanciesFilledMotorcycle() + 1);
-            } else {
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Todas as vagas de moto foram ocupadas!");
-            }
+            return company.reduceVacanciesCar(1);
         }
-        return company;
+
+        int qtFreeVacanciesMotorcycle = company.getQtTotalVacanciesMotorcycle() - company.getQtVacanciesFilledMotorcycle();
+        if(qtFreeVacanciesMotorcycle <= 0) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Todas as vagas de moto foram ocupadas!");
+        }
+        return company.reduceVacanciesMotorcycle(1);
     }
 
     public static Company deleteCompanyVehicle (CompanyRepository companyRepository, Long id, TypeVehicle typeVehicle) {
         Company company = companyRepository.getById(id);
 
         if (TypeVehicle.CAR.equals(typeVehicle)){
-            if(company.getQtVacanciesFilledCar() > 0) {
-                company.setQtVacanciesFilledCar(company.getQtVacanciesFilledCar() - 1);
-            } else {
+            if (company.getQtVacanciesFilledCar() <= 0) {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Todas as vagas de carro estão livres!");
             }
-        } else {
-            if(company.getQtVacanciesFilledMotorcycle() > 0) {
-                company.setQtVacanciesFilledMotorcycle(company.getQtVacanciesFilledMotorcycle() - 1);
-            } else {
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Todas as vagas de moto estão livres!");
-            }
+            return company.increaseVacanciesCar(1);
         }
 
-        return company;
+        if(company.getQtVacanciesFilledMotorcycle() <= 0) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Todas as vagas de moto estão livres!");
+        }
+        return company.increaseVacanciesMotorcycle(1);
     }
 }
