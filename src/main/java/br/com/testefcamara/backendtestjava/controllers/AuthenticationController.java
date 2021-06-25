@@ -2,12 +2,14 @@ package br.com.testefcamara.backendtestjava.controllers;
 
 import br.com.testefcamara.backendtestjava.config.security.TokenService;
 import br.com.testefcamara.backendtestjava.dto.TokenDto;
+import br.com.testefcamara.backendtestjava.errorDto.ErrorDto;
 import br.com.testefcamara.backendtestjava.form.LoginForm;
 import br.com.testefcamara.backendtestjava.form.UserForm;
 import br.com.testefcamara.backendtestjava.form.UserFormUpdate;
 import br.com.testefcamara.backendtestjava.models.User;
 import br.com.testefcamara.backendtestjava.repository.UserRepository;
 import org.springframework.context.annotation.Profile;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -15,6 +17,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.transaction.Transactional;
@@ -40,13 +43,12 @@ public class AuthenticationController {
 
     @PostMapping
     public ResponseEntity<TokenDto> authenticate(@RequestBody @Valid LoginForm loginForm) {
-        UsernamePasswordAuthenticationToken loginData = loginForm.converter();
-
         try {
+            UsernamePasswordAuthenticationToken loginData = loginForm.converter();
             Authentication authentication = authentitcationManager.authenticate(loginData);
             String token = tokenService.generateToken(authentication);
             return ResponseEntity.ok(new TokenDto(token, "Bearer"));
-        } catch (AuthenticationException e) {
+        } catch (AuthenticationException exc) {
             return ResponseEntity.badRequest().build();
         }
     }
@@ -54,30 +56,40 @@ public class AuthenticationController {
     @PostMapping(value = "/register")
     @Transactional
     public ResponseEntity<?> register(@RequestBody @Valid UserForm userForm, UriComponentsBuilder uriBuilder) {
-        User user = userForm.converter();
-        userRepository.save(user);
-        return ResponseEntity.status(201).body("Usuário cadastrado com sucesso!");
+        try {
+            User user = userForm.converter();
+            userRepository.save(user);
+            return ResponseEntity.status(201).body("Usuário cadastrado com sucesso!");
+        } catch (RuntimeException exc) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Erro interno no servidor.", exc.fillInStackTrace());
+        }
     }
 
     @PutMapping(value = "/update/{id}")
     @Transactional
     public  ResponseEntity<?> update(@PathVariable Long id, @RequestBody @Valid UserFormUpdate userFormUpdate){
-        Optional<User> userOptional = userRepository.findById(id);
-        if (userOptional.isPresent()) {
-            User user = userFormUpdate.update(id, userRepository);
+        try {
+            Optional<User> userOptional = userRepository.findById(id);
+            if (!userOptional.isPresent())
+                return new ResponseEntity(new ErrorDto(404, "Usuário não encontrado."), HttpStatus.NOT_FOUND);
+            userFormUpdate.update(id, userRepository);
             return ResponseEntity.ok().body("Usuário alterado com sucesso!");
+        } catch (RuntimeException exc) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Erro interno no servidor.", exc.fillInStackTrace());
         }
-        return ResponseEntity.notFound().build();
     }
 
     @DeleteMapping(value="/delete/{id}")
     @Transactional
     public ResponseEntity<?> delete(@PathVariable Long id){
-        Optional<User> optionalUser = userRepository.findById(id);
-        if(optionalUser.isPresent()) {
+        try {
+            Optional<User> optionalUser = userRepository.findById(id);
+            if(!optionalUser.isPresent())
+                return new ResponseEntity(new ErrorDto(404, "Usuário não encontrado."), HttpStatus.NOT_FOUND);
             userRepository.deleteById(id);
             return ResponseEntity.ok().build();
+        } catch (RuntimeException exc) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Erro interno no servidor.", exc.fillInStackTrace());
         }
-        return ResponseEntity.notFound().build();
     }
 }

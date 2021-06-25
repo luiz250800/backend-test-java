@@ -2,6 +2,7 @@ package br.com.testefcamara.backendtestjava.controllers;
 
 import br.com.testefcamara.backendtestjava.dto.FlowCompanyVehicleDto;
 import br.com.testefcamara.backendtestjava.dto.VehicleDto;
+import br.com.testefcamara.backendtestjava.errorDto.ErrorDto;
 import br.com.testefcamara.backendtestjava.form.FlowCompanyVehicleForm;
 import br.com.testefcamara.backendtestjava.models.Company;
 import br.com.testefcamara.backendtestjava.models.Vehicle;
@@ -9,6 +10,7 @@ import br.com.testefcamara.backendtestjava.repository.CompanyRepository;
 import br.com.testefcamara.backendtestjava.repository.VehicleRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -29,12 +31,15 @@ public class FlowCompanyVehicleController {
     }
 
     @GetMapping(value = "/{idCompany}")
-    public FlowCompanyVehicleDto flowCampanyVehicle(@PathVariable Long idCompany, @RequestBody FlowCompanyVehicleForm flowCompanyVehicleForm) {
-        Optional<Company> optionalCompany = companyRepository.findById(idCompany);
-        if(optionalCompany.isPresent()){
+    public ResponseEntity<FlowCompanyVehicleDto> flowCampanyVehicle(@PathVariable Long idCompany, @RequestBody FlowCompanyVehicleForm flowCompanyVehicleForm) {
+        try {
+            Optional<Company> optionalCompany = companyRepository.findById(idCompany);
+            if(!optionalCompany.isPresent())
+                return new ResponseEntity(new ErrorDto(404, "Estabelecimento não encontrado."), HttpStatus.NOT_FOUND);
             List<Vehicle> vehicles = vehicleRepository.findVehicleByCompanyAndDateInterval(optionalCompany.get(), flowCompanyVehicleForm.getDhStart(), flowCompanyVehicleForm.getDhEnd());
-            return new FlowCompanyVehicleDto(optionalCompany.get(), vehicles);
+            return new ResponseEntity(new FlowCompanyVehicleDto(optionalCompany.get(), vehicles), HttpStatus.OK);
+        } catch (RuntimeException exc) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Erro interno no servidor.", exc.fillInStackTrace());
         }
-        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Código do estabelecimento não encontrado.");
     }
 }

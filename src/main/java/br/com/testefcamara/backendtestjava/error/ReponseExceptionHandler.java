@@ -14,6 +14,7 @@ public class ReponseExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(ResponseStatusException.class)
     public ResponseEntity handlerException(@NotNull ResponseStatusException exc) {
         logger.trace(exc.getStackTrace());
+        logger.error(exc.getCause().toString());
         return new ResponseEntity(new ErrorDto(exc.getRawStatusCode(), exc.getReason()), exc.getStatus());
     }
 }
