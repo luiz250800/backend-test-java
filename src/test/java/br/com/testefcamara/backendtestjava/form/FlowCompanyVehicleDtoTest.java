@@ -1,5 +1,6 @@
 package br.com.testefcamara.backendtestjava.form;
 
+import br.com.testefcamara.backendtestjava.bo.FlowVehicleCompanyBo;
 import br.com.testefcamara.backendtestjava.dto.FlowCompanyVehicleDto;
 import br.com.testefcamara.backendtestjava.enums.TypeVehicle;
 import br.com.testefcamara.backendtestjava.models.Company;
@@ -38,7 +39,7 @@ public class FlowCompanyVehicleDtoTest {
         Vehicle vehicle = new Vehicle("Mercedes 2", "Esportivo 2", "preto 2", "hgb2004 2", TypeVehicle.CAR, this.company);
         vehicle = vehicleRepository.save(vehicle);
 
-        CompanyCapacityForm.deleteCompanyVehicle(companyRepository, vehicle.getCompany().getId(), vehicle.getTpVehicle());
+        FlowVehicleCompanyBo.registerOutputVehicleCompany(companyRepository, vehicle.getCompany().getId(), vehicle.getTpVehicle());
         VehicleDeleteForm.deletedAt(vehicle.getId(), vehicleRepository);
     }
 
