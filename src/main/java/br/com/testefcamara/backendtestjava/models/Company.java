@@ -117,4 +117,32 @@ public class Company {
     public void setQtVacanciesFilledCar(int qtVacanciesCar) {
         this.qtVacanciesFilledCar = qtVacanciesCar;
     }
+
+    public Company increaseVacanciesCar(int qtVacanciesIncrease) {
+        this.qtVacanciesFilledCar = this.qtVacanciesFilledCar - qtVacanciesIncrease;
+        return this;
+    }
+
+    public Company increaseVacanciesMotorcycle(int qtVacanciesIncrease) {
+        this.qtVacanciesFilledMotorcycle = this.qtVacanciesFilledMotorcycle - qtVacanciesIncrease;
+        return this;
+    }
+
+    public Company reduceVacanciesCar(int qtVacanciesReduce) {
+        this.qtVacanciesFilledCar = this.qtVacanciesFilledCar + qtVacanciesReduce;
+        return this;
+    }
+
+    public Company reduceVacanciesMotorcycle(int qtVacanciesReduce) {
+        this.qtVacanciesFilledMotorcycle = this.qtVacanciesFilledMotorcycle + qtVacanciesReduce;
+        return this;
+    }
+
+    public int calculateFreeVacanciesCar() {
+        return this.qtTotalVacanciesCar - this.qtVacanciesFilledCar;
+    }
+
+    public int calculateFreeVacanciesMotorcycle() {
+        return this.qtTotalVacanciesMotorcycle - this.qtVacanciesFilledMotorcycle;
+    }
 }

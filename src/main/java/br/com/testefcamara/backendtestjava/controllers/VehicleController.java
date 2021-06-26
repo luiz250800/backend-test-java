@@ -1,5 +1,6 @@
 package br.com.testefcamara.backendtestjava.controllers;
 
+import br.com.testefcamara.backendtestjava.bo.FlowVehicleCompanyBo;
 import br.com.testefcamara.backendtestjava.dto.VehicleDto;
 import br.com.testefcamara.backendtestjava.errorDto.ErrorDto;
 import br.com.testefcamara.backendtestjava.form.*;
@@ -49,8 +50,7 @@ public class VehicleController {
         try {
             Vehicle vehicle = vehicleForm.converter(companyRepository);
             Vehicle vehicleSave = vehicleRepository.save(vehicle);
-
-            CompanyCapacityForm.registerCompanyVehicle(companyRepository, vehicleForm.getIdCompany(), vehicleSave.getTpVehicle());
+            FlowVehicleCompanyBo.registerEntranceVehicleCompany(companyRepository, vehicleForm.getIdCompany(), vehicleSave.getTpVehicle());
 
             URI uri = uriBuilder.path("/register/{id}").buildAndExpand(vehicle.getId()).toUri();
             return ResponseEntity.created(uri).body(new VehicleDto(vehicle));
@@ -80,7 +80,7 @@ public class VehicleController {
             Optional<Vehicle> optionalVehicle = vehicleRepository.findById(id);
             if (!optionalVehicle.isPresent())
                 return new ResponseEntity(new ErrorDto(404, "Usuário não encontrado."), HttpStatus.NOT_FOUND);
-            CompanyCapacityForm.deleteCompanyVehicle(companyRepository, optionalVehicle.get().getCompany().getId(), optionalVehicle.get().getTpVehicle());
+            FlowVehicleCompanyBo.registerOutputVehicleCompany(companyRepository, optionalVehicle.get().getCompany().getId(), optionalVehicle.get().getTpVehicle());
             Vehicle vehicle = VehicleDeleteForm.deletedAt(id, vehicleRepository);
             return ResponseEntity.ok(new VehicleDto(vehicle));
         } catch (RuntimeException exc) {
