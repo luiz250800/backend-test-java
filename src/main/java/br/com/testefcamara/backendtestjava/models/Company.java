@@ -137,4 +137,12 @@ public class Company {
         this.qtVacanciesFilledMotorcycle = this.qtVacanciesFilledMotorcycle + qtVacanciesReduce;
         return this;
     }
+
+    public int calculateFreeVacanciesCar() {
+        return this.qtTotalVacanciesCar - this.qtVacanciesFilledCar;
+    }
+
+    public int calculateFreeVacanciesMotorcycle() {
+        return this.qtTotalVacanciesMotorcycle - this.qtVacanciesFilledMotorcycle;
+    }
 }
