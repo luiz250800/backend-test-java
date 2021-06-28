@@ -21,9 +21,9 @@ public class ErrorValidateHandler {
 
     @ResponseStatus(code = HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public List<FormErrorDto> handle(MethodArgumentNotValidException exception){
+    public List<FormErrorDto> handle(MethodArgumentNotValidException exc){
         List<FormErrorDto> formErrorDto = new ArrayList<>();
-        List<FieldError> fieldErrors = exception.getBindingResult().getFieldErrors();
+        List<FieldError> fieldErrors = exc.getBindingResult().getFieldErrors();
 
         fieldErrors.forEach(error -> {
             FormErrorDto err = new FormErrorDto(error.getField(), messageSource.getMessage(error, LocaleContextHolder.getLocale()));
