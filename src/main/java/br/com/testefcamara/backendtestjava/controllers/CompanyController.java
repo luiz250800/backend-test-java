@@ -4,9 +4,11 @@ import br.com.testefcamara.backendtestjava.dto.CompanyDto;
 import br.com.testefcamara.backendtestjava.form.CompanyForm;
 import br.com.testefcamara.backendtestjava.models.Company;
 import br.com.testefcamara.backendtestjava.repository.CompanyRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.transaction.Transactional;
@@ -27,47 +29,75 @@ public class CompanyController {
 
     @GetMapping
     public List<CompanyDto> listAll(){
-        List<Company> company = companyRepository.findAll();
-        return CompanyDto.converter(company);
+        try {
+            List<Company> company = companyRepository.findAll();
+            return CompanyDto.converter(company);
+        } catch(ResponseStatusException exc) {
+            throw new ResponseStatusException(HttpStatus.resolve(exc.getRawStatusCode()), exc.getReason(), exc.fillInStackTrace());
+        } catch (RuntimeException exc) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Erro interno no servidor.", exc.fillInStackTrace());
+        }
     }
 
     @GetMapping(value="/{id}")
-    public ResponseEntity<CompanyDto> findById(@PathVariable Long id){
-        Optional<Company> company = companyRepository.findById(id);
-        if(company.isPresent())
+    public ResponseEntity<CompanyDto> findById(@PathVariable Long id) {
+        try {
+            Optional<Company> company = companyRepository.findById(id);
+            if(!company.isPresent())
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Estabelecimento não encontrado.");
             return ResponseEntity.ok(new CompanyDto(company.get()));
-        return ResponseEntity.notFound().build();
+        } catch(ResponseStatusException exc) {
+            throw new ResponseStatusException(HttpStatus.resolve(exc.getRawStatusCode()), exc.getReason(), exc.fillInStackTrace());
+        } catch (RuntimeException exc) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Erro interno no servidor.", exc.fillInStackTrace());
+        }
     }
 
     @PostMapping(value="/register")
     @Transactional
     public ResponseEntity<CompanyDto> register(@RequestBody @Valid CompanyForm companyForm, UriComponentsBuilder uriBuilder){
-        Company company = companyForm.converter();
-        companyRepository.save(company);
-        URI uri = uriBuilder.path("/registerCompany/{id}").buildAndExpand(company.getId()).toUri();
-        return ResponseEntity.created(uri).body(new CompanyDto(company));
+        try {
+            Company company = companyForm.converter();
+            companyRepository.save(company);
+            URI uri = uriBuilder.path("/registerCompany/{id}").buildAndExpand(company.getId()).toUri();
+            return ResponseEntity.created(uri).body(new CompanyDto(company));
+        } catch(ResponseStatusException exc) {
+            throw new ResponseStatusException(HttpStatus.resolve(exc.getRawStatusCode()), exc.getReason(), exc.fillInStackTrace());
+        } catch (RuntimeException exc) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Erro interno no servidor.", exc.fillInStackTrace());
+        }
     }
 
     @PutMapping(value= "/update/{id}")
     @Transactional
     public ResponseEntity<CompanyDto> update(@PathVariable Long id, @RequestBody @Valid CompanyForm companyForm) {
-        Optional<Company> optionalCompany = companyRepository.findById(id);
-        if(optionalCompany.isPresent()){
+        try {
+            Optional<Company> optionalCompany = companyRepository.findById(id);
+            if(!optionalCompany.isPresent())
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Estabelecimento não encontrado.");
             Company company = companyForm.update(id, companyRepository);
             return ResponseEntity.ok(new CompanyDto(company));
+        } catch(ResponseStatusException exc) {
+            throw new ResponseStatusException(HttpStatus.resolve(exc.getRawStatusCode()), exc.getReason(), exc.fillInStackTrace());
+        } catch (RuntimeException exc) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Erro interno no servidor.", exc.fillInStackTrace());
         }
-        return ResponseEntity.notFound().build();
     }
 
     @DeleteMapping(value="/delete/{id}")
     @Transactional
     public ResponseEntity<?> delete(@PathVariable Long id){
-        Optional<Company> optionalCompany = companyRepository.findById(id);
-        if(optionalCompany.isPresent()) {
+        try {
+            Optional<Company> optionalCompany = companyRepository.findById(id);
+            if(!optionalCompany.isPresent())
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Estabelecimento não encontrado.");
             companyRepository.deleteById(id);
             return ResponseEntity.ok().build();
+        } catch(ResponseStatusException exc) {
+            throw new ResponseStatusException(HttpStatus.resolve(exc.getRawStatusCode()), exc.getReason(), exc.fillInStackTrace());
+        } catch (RuntimeException exc) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Erro interno no servidor.", exc.fillInStackTrace());
         }
-        return ResponseEntity.notFound().build();
     }
 
 }
