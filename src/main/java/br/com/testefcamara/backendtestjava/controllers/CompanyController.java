@@ -1,7 +1,6 @@
 package br.com.testefcamara.backendtestjava.controllers;
 
 import br.com.testefcamara.backendtestjava.dto.CompanyDto;
-import br.com.testefcamara.backendtestjava.errorDto.ErrorDto;
 import br.com.testefcamara.backendtestjava.form.CompanyForm;
 import br.com.testefcamara.backendtestjava.models.Company;
 import br.com.testefcamara.backendtestjava.repository.CompanyRepository;
@@ -33,6 +32,8 @@ public class CompanyController {
         try {
             List<Company> company = companyRepository.findAll();
             return CompanyDto.converter(company);
+        } catch(ResponseStatusException exc) {
+            throw new ResponseStatusException(HttpStatus.resolve(exc.getRawStatusCode()), exc.getReason(), exc.fillInStackTrace());
         } catch (RuntimeException exc) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Erro interno no servidor.", exc.fillInStackTrace());
         }
@@ -43,8 +44,10 @@ public class CompanyController {
         try {
             Optional<Company> company = companyRepository.findById(id);
             if(!company.isPresent())
-                return new ResponseEntity(new ErrorDto(404, "Estabelecimento não encontrado."), HttpStatus.NOT_FOUND);
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Estabelecimento não encontrado.");
             return ResponseEntity.ok(new CompanyDto(company.get()));
+        } catch(ResponseStatusException exc) {
+            throw new ResponseStatusException(HttpStatus.resolve(exc.getRawStatusCode()), exc.getReason(), exc.fillInStackTrace());
         } catch (RuntimeException exc) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Erro interno no servidor.", exc.fillInStackTrace());
         }
@@ -58,6 +61,8 @@ public class CompanyController {
             companyRepository.save(company);
             URI uri = uriBuilder.path("/registerCompany/{id}").buildAndExpand(company.getId()).toUri();
             return ResponseEntity.created(uri).body(new CompanyDto(company));
+        } catch(ResponseStatusException exc) {
+            throw new ResponseStatusException(HttpStatus.resolve(exc.getRawStatusCode()), exc.getReason(), exc.fillInStackTrace());
         } catch (RuntimeException exc) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Erro interno no servidor.", exc.fillInStackTrace());
         }
@@ -69,9 +74,11 @@ public class CompanyController {
         try {
             Optional<Company> optionalCompany = companyRepository.findById(id);
             if(!optionalCompany.isPresent())
-                return new ResponseEntity(new ErrorDto(404, "Estabelecimento não encontrado."), HttpStatus.NOT_FOUND);
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Estabelecimento não encontrado.");
             Company company = companyForm.update(id, companyRepository);
             return ResponseEntity.ok(new CompanyDto(company));
+        } catch(ResponseStatusException exc) {
+            throw new ResponseStatusException(HttpStatus.resolve(exc.getRawStatusCode()), exc.getReason(), exc.fillInStackTrace());
         } catch (RuntimeException exc) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Erro interno no servidor.", exc.fillInStackTrace());
         }
@@ -83,9 +90,11 @@ public class CompanyController {
         try {
             Optional<Company> optionalCompany = companyRepository.findById(id);
             if(!optionalCompany.isPresent())
-                return new ResponseEntity(new ErrorDto(404, "Estabelecimento não encontrado."), HttpStatus.NOT_FOUND);
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Estabelecimento não encontrado.");
             companyRepository.deleteById(id);
             return ResponseEntity.ok().build();
+        } catch(ResponseStatusException exc) {
+            throw new ResponseStatusException(HttpStatus.resolve(exc.getRawStatusCode()), exc.getReason(), exc.fillInStackTrace());
         } catch (RuntimeException exc) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Erro interno no servidor.", exc.fillInStackTrace());
         }

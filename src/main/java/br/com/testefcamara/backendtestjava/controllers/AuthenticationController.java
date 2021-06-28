@@ -2,7 +2,6 @@ package br.com.testefcamara.backendtestjava.controllers;
 
 import br.com.testefcamara.backendtestjava.config.security.TokenService;
 import br.com.testefcamara.backendtestjava.dto.TokenDto;
-import br.com.testefcamara.backendtestjava.errorDto.ErrorDto;
 import br.com.testefcamara.backendtestjava.form.LoginForm;
 import br.com.testefcamara.backendtestjava.form.UserForm;
 import br.com.testefcamara.backendtestjava.form.UserFormUpdate;
@@ -50,6 +49,8 @@ public class AuthenticationController {
             return ResponseEntity.ok(new TokenDto(token, "Bearer"));
         } catch (AuthenticationException exc) {
             return ResponseEntity.badRequest().build();
+        } catch (RuntimeException exc) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Erro interno no servidor.", exc.fillInStackTrace());
         }
     }
 
@@ -60,6 +61,8 @@ public class AuthenticationController {
             User user = userForm.converter();
             userRepository.save(user);
             return ResponseEntity.status(201).body("Usuário cadastrado com sucesso!");
+        } catch(ResponseStatusException exc) {
+            throw new ResponseStatusException(HttpStatus.resolve(exc.getRawStatusCode()), exc.getReason(), exc.fillInStackTrace());
         } catch (RuntimeException exc) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Erro interno no servidor.", exc.fillInStackTrace());
         }
@@ -71,9 +74,11 @@ public class AuthenticationController {
         try {
             Optional<User> userOptional = userRepository.findById(id);
             if (!userOptional.isPresent())
-                return new ResponseEntity(new ErrorDto(404, "Usuário não encontrado."), HttpStatus.NOT_FOUND);
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado.");
             userFormUpdate.update(id, userRepository);
             return ResponseEntity.ok().body("Usuário alterado com sucesso!");
+        } catch(ResponseStatusException exc) {
+            throw new ResponseStatusException(HttpStatus.resolve(exc.getRawStatusCode()), exc.getReason(), exc.fillInStackTrace());
         } catch (RuntimeException exc) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Erro interno no servidor.", exc.fillInStackTrace());
         }
@@ -85,9 +90,11 @@ public class AuthenticationController {
         try {
             Optional<User> optionalUser = userRepository.findById(id);
             if(!optionalUser.isPresent())
-                return new ResponseEntity(new ErrorDto(404, "Usuário não encontrado."), HttpStatus.NOT_FOUND);
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado.");
             userRepository.deleteById(id);
             return ResponseEntity.ok().build();
+        } catch(ResponseStatusException exc) {
+            throw new ResponseStatusException(HttpStatus.resolve(exc.getRawStatusCode()), exc.getReason(), exc.fillInStackTrace());
         } catch (RuntimeException exc) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Erro interno no servidor.", exc.fillInStackTrace());
         }

@@ -2,7 +2,6 @@ package br.com.testefcamara.backendtestjava.controllers;
 
 import br.com.testefcamara.backendtestjava.bo.FlowVehicleCompanyBo;
 import br.com.testefcamara.backendtestjava.dto.VehicleDto;
-import br.com.testefcamara.backendtestjava.errorDto.ErrorDto;
 import br.com.testefcamara.backendtestjava.form.*;
 import br.com.testefcamara.backendtestjava.models.Vehicle;
 import br.com.testefcamara.backendtestjava.repository.CompanyRepository;
@@ -37,8 +36,10 @@ public class VehicleController {
         try {
             Optional<Vehicle> vehicle = vehicleRepository.findById(id);
             if (!vehicle.isPresent())
-                return new ResponseEntity(new ErrorDto(404, "Usuário não encontrado."), HttpStatus.NOT_FOUND);
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Veículo não encontrado.");
             return ResponseEntity.ok(new VehicleDto(vehicle.get()));
+        } catch(ResponseStatusException exc) {
+            throw new ResponseStatusException(HttpStatus.resolve(exc.getRawStatusCode()), exc.getReason(), exc.fillInStackTrace());
         } catch (RuntimeException exc) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Erro interno no servidor.", exc.fillInStackTrace());
         }
@@ -51,9 +52,10 @@ public class VehicleController {
             Vehicle vehicle = vehicleForm.converter(companyRepository);
             Vehicle vehicleSave = vehicleRepository.save(vehicle);
             FlowVehicleCompanyBo.registerEntranceVehicleCompany(companyRepository, vehicleForm.getIdCompany(), vehicleSave.getTpVehicle());
-
             URI uri = uriBuilder.path("/register/{id}").buildAndExpand(vehicle.getId()).toUri();
             return ResponseEntity.created(uri).body(new VehicleDto(vehicle));
+        } catch(ResponseStatusException exc) {
+            throw new ResponseStatusException(HttpStatus.resolve(exc.getRawStatusCode()), exc.getReason(), exc.fillInStackTrace());
         } catch (RuntimeException exc) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Erro interno no servidor.", exc.fillInStackTrace());
         }
@@ -65,9 +67,11 @@ public class VehicleController {
         try {
             Optional<Vehicle> optionalVehicle = vehicleRepository.findById(id);
             if (!optionalVehicle.isPresent())
-                return new ResponseEntity(new ErrorDto(404, "Usuário não encontrado."), HttpStatus.NOT_FOUND);
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Veículo não encontrado.");
             Vehicle vehicle = vehicleForm.update(id, vehicleRepository);
             return ResponseEntity.ok(new VehicleDto(vehicle));
+        } catch(ResponseStatusException exc) {
+            throw new ResponseStatusException(HttpStatus.resolve(exc.getRawStatusCode()), exc.getReason(), exc.fillInStackTrace());
         } catch (RuntimeException exc) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Erro interno no servidor.", exc.fillInStackTrace());
         }
@@ -79,10 +83,12 @@ public class VehicleController {
         try {
             Optional<Vehicle> optionalVehicle = vehicleRepository.findById(id);
             if (!optionalVehicle.isPresent())
-                return new ResponseEntity(new ErrorDto(404, "Usuário não encontrado."), HttpStatus.NOT_FOUND);
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Veículo não encontrado.");
             FlowVehicleCompanyBo.registerOutputVehicleCompany(companyRepository, optionalVehicle.get().getCompany().getId(), optionalVehicle.get().getTpVehicle());
             Vehicle vehicle = VehicleDeleteForm.deletedAt(id, vehicleRepository);
             return ResponseEntity.ok(new VehicleDto(vehicle));
+        } catch(ResponseStatusException exc) {
+            throw new ResponseStatusException(HttpStatus.resolve(exc.getRawStatusCode()), exc.getReason(), exc.fillInStackTrace());
         } catch (RuntimeException exc) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Erro interno no servidor.", exc.fillInStackTrace());
         }

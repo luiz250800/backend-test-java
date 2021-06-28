@@ -1,6 +1,6 @@
 package br.com.testefcamara.backendtestjava.error;
 
-import br.com.testefcamara.backendtestjava.errorDto.ErrorDto;
+import br.com.testefcamara.backendtestjava.dto.ErrorDto;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;

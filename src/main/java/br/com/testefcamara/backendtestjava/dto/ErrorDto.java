@@ -1,4 +1,4 @@
-package br.com.testefcamara.backendtestjava.errorDto;
+package br.com.testefcamara.backendtestjava.dto;
 
 import java.time.LocalDateTime;
 

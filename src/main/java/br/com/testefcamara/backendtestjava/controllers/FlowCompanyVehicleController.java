@@ -1,8 +1,6 @@
 package br.com.testefcamara.backendtestjava.controllers;
 
 import br.com.testefcamara.backendtestjava.dto.FlowCompanyVehicleDto;
-import br.com.testefcamara.backendtestjava.dto.VehicleDto;
-import br.com.testefcamara.backendtestjava.errorDto.ErrorDto;
 import br.com.testefcamara.backendtestjava.form.FlowCompanyVehicleForm;
 import br.com.testefcamara.backendtestjava.models.Company;
 import br.com.testefcamara.backendtestjava.models.Vehicle;
@@ -35,9 +33,11 @@ public class FlowCompanyVehicleController {
         try {
             Optional<Company> optionalCompany = companyRepository.findById(idCompany);
             if(!optionalCompany.isPresent())
-                return new ResponseEntity(new ErrorDto(404, "Estabelecimento não encontrado."), HttpStatus.NOT_FOUND);
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Estabelecimento não encontrado.");
             List<Vehicle> vehicles = vehicleRepository.findVehicleByCompanyAndDateInterval(optionalCompany.get(), flowCompanyVehicleForm.getDhStart(), flowCompanyVehicleForm.getDhEnd());
             return new ResponseEntity(new FlowCompanyVehicleDto(optionalCompany.get(), vehicles), HttpStatus.OK);
+        } catch(ResponseStatusException exc) {
+            throw new ResponseStatusException(HttpStatus.resolve(exc.getRawStatusCode()), exc.getReason(), exc.fillInStackTrace());
         } catch (RuntimeException exc) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Erro interno no servidor.", exc.fillInStackTrace());
         }
