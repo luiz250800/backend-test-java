@@ -15,10 +15,19 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+/**
+ * Classe com configrações de DESENVOLVIMENTO para restrição de rotas.
+ */
 @EnableWebSecurity
 @Configuration
 @Profile("dev")
 public class DevSecurityConfigurations extends WebSecurityConfigurerAdapter {
+
+    /**
+     * Determina quais rotas http serão permitidas sem necessidade de autenticação.
+     * @param http
+     * @throws Exception
+     */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
@@ -26,6 +35,11 @@ public class DevSecurityConfigurations extends WebSecurityConfigurerAdapter {
                 .and().csrf().disable();
     }
 
+    /**
+     * Determina quais rotas serão ignoradas ao restringi-las.
+     * @param web
+     * @throws Exception
+     */
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring()

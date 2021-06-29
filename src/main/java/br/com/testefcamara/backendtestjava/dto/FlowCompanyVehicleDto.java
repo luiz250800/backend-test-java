@@ -5,6 +5,9 @@ import br.com.testefcamara.backendtestjava.models.Vehicle;
 
 import java.util.List;
 
+/**
+ * Classe DTO para retorno de relatório de veículos no estabelecimento.
+ */
 public class FlowCompanyVehicleDto {
 
     private CompanyDto company;
@@ -15,6 +18,10 @@ public class FlowCompanyVehicleDto {
 
     private long qtOutputs;
 
+    /**
+     * @param company
+     * @param vehicles
+     */
     public FlowCompanyVehicleDto(Company company, List<Vehicle> vehicles) {
         this.company = new CompanyDto(company);
         this.vehicles = VehicleFlowDto.converter(vehicles);

@@ -7,6 +7,9 @@ import org.springframework.data.domain.Page;
 
 import java.time.LocalDateTime;
 
+/**
+ * Classe DTO para retorno de veículo.
+ */
 public class VehicleDto {
     private Long id;
 
@@ -26,6 +29,9 @@ public class VehicleDto {
 
     private LocalDateTime deleted_at;
 
+    /**
+     * @param vehicle
+     */
     public VehicleDto(Vehicle vehicle) {
         this.id = vehicle.getId();
         this.nmBrand = vehicle.getNmBrand();
@@ -38,6 +44,11 @@ public class VehicleDto {
         this.deleted_at = vehicle.getDeleted_at();
     }
 
+    /**
+     * Método para converter lista de veículo para lista de veículo DTO.
+     * @param vehicle
+     * @return
+     */
     public static Page<VehicleDto> converter(Page<Vehicle> vehicle) {
         return vehicle.map(VehicleDto::new);
     }

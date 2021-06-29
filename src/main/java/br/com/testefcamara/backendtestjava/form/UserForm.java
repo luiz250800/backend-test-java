@@ -8,6 +8,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+/**
+ * Classe para forumulário de usuário.
+ */
 public class UserForm {
 
     @NotNull @NotEmpty
@@ -32,6 +35,10 @@ public class UserForm {
         this.nmPassword = nmPassword;
     }
 
+    /**
+     * Método para converter UserForm para User e criptografar password.
+     * @return
+     */
     public User converter() {
         User user = new User();
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();

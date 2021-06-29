@@ -1,12 +1,15 @@
 package br.com.testefcamara.backendtestjava.form;
 
-import br.com.testefcamara.backendtestjava.enums.TypeVehicle;
 import br.com.testefcamara.backendtestjava.models.Vehicle;
 import br.com.testefcamara.backendtestjava.repository.VehicleRepository;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+
+/**
+ * Classe para forumulário de alteração de veículo.
+ */
 public class VehicleUpdateForm {
     @NotNull
     @NotEmpty
@@ -53,6 +56,12 @@ public class VehicleUpdateForm {
         this.nrPlate = nrPlate;
     }
 
+    /**
+     * Método para alteração de veículo.
+     * @param id
+     * @param vehicleRepository
+     * @return
+     */
     public Vehicle update(Long id, VehicleRepository vehicleRepository) {
         Vehicle vehicle = vehicleRepository.getById(id);
 

@@ -2,6 +2,9 @@ package br.com.testefcamara.backendtestjava.models;
 
 import javax.persistence.*;
 
+/**
+ * Classe model de estabelecimento.
+ */
 @Entity
 public class Company {
 
@@ -37,6 +40,14 @@ public class Company {
 
     }
 
+    /**
+     * @param nmCompany
+     * @param cdCnpj
+     * @param nmAddress
+     * @param nrPhone
+     * @param qtTotalVacanciesMotorcycle
+     * @param qtTotalVacanciesCar
+     */
     public Company(String nmCompany, String cdCnpj, String nmAddress, String nrPhone, int qtTotalVacanciesMotorcycle, int qtTotalVacanciesCar) {
         this.nmCompany = nmCompany;
         this.cdCnpj = cdCnpj;
@@ -116,5 +127,61 @@ public class Company {
 
     public void setQtVacanciesFilledCar(int qtVacanciesCar) {
         this.qtVacanciesFilledCar = qtVacanciesCar;
+    }
+
+    /**
+     * Método para aumentar vagas de carro.
+     * @param qtVacanciesIncrease
+     * @return
+     */
+    public Company increaseVacanciesCar(int qtVacanciesIncrease) {
+        this.qtVacanciesFilledCar = this.qtVacanciesFilledCar - qtVacanciesIncrease;
+        return this;
+    }
+
+    /**
+     * Método para aumentar vagas de moto.
+     * @param qtVacanciesIncrease
+     * @return
+     */
+    public Company increaseVacanciesMotorcycle(int qtVacanciesIncrease) {
+        this.qtVacanciesFilledMotorcycle = this.qtVacanciesFilledMotorcycle - qtVacanciesIncrease;
+        return this;
+    }
+
+    /**
+     * Método para reduzir vagas de carro.
+     * @param qtVacanciesReduce
+     * @return
+     */
+    public Company reduceVacanciesCar(int qtVacanciesReduce) {
+        this.qtVacanciesFilledCar = this.qtVacanciesFilledCar + qtVacanciesReduce;
+        return this;
+    }
+
+    /**
+     * Método para reduzir vagas de moto.
+     * @param qtVacanciesReduce
+     * @return
+     */
+    public Company reduceVacanciesMotorcycle(int qtVacanciesReduce) {
+        this.qtVacanciesFilledMotorcycle = this.qtVacanciesFilledMotorcycle + qtVacanciesReduce;
+        return this;
+    }
+
+    /**
+     * Método para calcular vagas livres de carro.
+     * @return
+     */
+    public int calculateFreeVacanciesCar() {
+        return this.qtTotalVacanciesCar - this.qtVacanciesFilledCar;
+    }
+
+    /**
+     * Método para calcular vagas livres de moto.
+     * @return
+     */
+    public int calculateFreeVacanciesMotorcycle() {
+        return this.qtTotalVacanciesMotorcycle - this.qtVacanciesFilledMotorcycle;
     }
 }

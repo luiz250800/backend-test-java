@@ -1,5 +1,8 @@
 package br.com.testefcamara.backendtestjava.dto;
 
+/**
+ * Classe DTO para retorno de token de usuário autenticado.
+ */
 public class TokenDto {
 
     private String token;
