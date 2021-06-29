@@ -1,0 +1,15 @@
+br.com.testefcamara.backendtestjava
+br.com.testefcamara.backendtestjava.bo
+br.com.testefcamara.backendtestjava.config.security
+br.com.testefcamara.backendtestjava.config.swagger
+br.com.testefcamara.backendtestjava.config.validate
+br.com.testefcamara.backendtestjava.controller
+br.com.testefcamara.backendtestjava.controllers
+br.com.testefcamara.backendtestjava.dto
+br.com.testefcamara.backendtestjava.enums
+br.com.testefcamara.backendtestjava.error
+br.com.testefcamara.backendtestjava.form
+br.com.testefcamara.backendtestjava.models
+br.com.testefcamara.backendtestjava.repository
+br.com.testefcamara.backendtestjava.strategy
+br.com.testefcamara.backendtestjava.strategyInterfaces

@@ -8,6 +8,9 @@ import br.com.testefcamara.backendtestjava.repository.CompanyRepository;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+/**
+ * Classe para forumulário de Veículo.
+ */
 public class VehicleForm {
 
     @NotNull @NotEmpty
@@ -52,6 +55,11 @@ public class VehicleForm {
 
     public void setIdCompany(Long idCompany) { this.idCompany = idCompany; }
 
+    /**
+     * Método para converter VehicleForm em Vehicle.
+     * @param companyRepository
+     * @return
+     */
     public Vehicle converter(CompanyRepository companyRepository) {
         Company company = companyRepository.getById(idCompany);
         return new Vehicle(nmBrand, nmModel, nmColor, nrPlate, tpVehicle, company);

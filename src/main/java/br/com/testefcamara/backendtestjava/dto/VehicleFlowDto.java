@@ -7,6 +7,9 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Classe DTO para retorno de fluxo de veículo sem estabelecimento.
+ */
 public class VehicleFlowDto {
 
     private Long id;
@@ -25,6 +28,9 @@ public class VehicleFlowDto {
 
     private LocalDateTime deleted_at;
 
+    /**
+     * @param vehicle
+     */
     public VehicleFlowDto(Vehicle vehicle) {
         this.id = vehicle.getId();
         this.nmBrand = vehicle.getNmBrand();
@@ -36,6 +42,11 @@ public class VehicleFlowDto {
         this.deleted_at = vehicle.getDeleted_at();
     }
 
+    /**
+     * Método para converter lista de veículo para fluxo veículos DTO sem estabelecimento.
+     * @param vehicle
+     * @return
+     */
     public static List<VehicleFlowDto> converter(List<Vehicle> vehicle) {
         return vehicle.stream().map(VehicleFlowDto::new).collect(Collectors.toList());
     }

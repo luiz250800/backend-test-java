@@ -11,6 +11,9 @@ import org.springframework.web.server.ResponseStatusException;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+/**
+ * Classe para formulário de alteração de usuário.
+ */
 public class UserFormUpdate {
     @NotNull
     @NotEmpty
@@ -46,6 +49,12 @@ public class UserFormUpdate {
         this.nmLastPassword = nmLastPassword;
     }
 
+    /**
+     * Método para alteração e validação de usuário.
+     * @param id
+     * @param userRepository
+     * @return
+     */
     public User update(Long id, UserRepository userRepository) {
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         User user = userRepository.getById(id);

@@ -8,6 +8,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+/**
+ * Classe model de usuário.
+ */
 @Entity
 public class User implements UserDetails {
 

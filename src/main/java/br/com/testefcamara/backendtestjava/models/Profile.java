@@ -7,6 +7,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+/**
+ * Classe model de profile.
+ */
 @Entity
 public class Profile implements GrantedAuthority {
 

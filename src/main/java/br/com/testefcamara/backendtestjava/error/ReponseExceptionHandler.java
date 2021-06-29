@@ -10,11 +10,19 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+/**
+ * Classe genérica para tratamento de erros.
+ */
 @ControllerAdvice
 public class ReponseExceptionHandler extends ResponseEntityExceptionHandler {
 
     private static final Logger logger = LogManager.getLogger();
 
+    /**
+     * Método genérico para tratamento de erros.
+     * @param exc
+     * @return
+     */
     @ExceptionHandler(ResponseStatusException.class)
     public ResponseEntity handlerException(@NotNull ResponseStatusException exc) {
         logger.info(" ---------------------------- WARN ERROR  ----------------------------");

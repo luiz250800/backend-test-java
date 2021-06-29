@@ -5,8 +5,16 @@ import br.com.testefcamara.backendtestjava.models.Company;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 
+/**
+ * Classe para strategy de moto.
+ */
 public class MotorcycleStrategy implements VehicleStrategy {
 
+    /**
+     * Método para validar e reduzir vagas de moto.
+     * @param company
+     * @return
+     */
     @Override
     public Company reduce(Company company) {
         if(company.calculateFreeVacanciesMotorcycle() <= 0) {
@@ -15,6 +23,11 @@ public class MotorcycleStrategy implements VehicleStrategy {
         return company.reduceVacanciesMotorcycle(1);
     }
 
+    /**
+     * Método para validar e aumentar vagas de moto.
+     * @param company
+     * @return
+     */
     @Override
     public Company increments(Company company) {
         if(company.getQtVacanciesFilledMotorcycle() <= 0) {

@@ -23,6 +23,9 @@ import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.util.Optional;
 
+/**
+ * Classe controller para CRUD de usuário.
+ */
 @RestController
 @RequestMapping(value = "/api/auth", produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 @Profile("prod")
@@ -34,12 +37,22 @@ public class AuthenticationController {
 
     private final UserRepository userRepository;
 
+    /**
+     * @param authentitcationManager
+     * @param tokenService
+     * @param userRepository
+     */
     public AuthenticationController(AuthenticationManager authentitcationManager, TokenService tokenService, UserRepository userRepository) {
         this.authentitcationManager = authentitcationManager;
         this.tokenService = tokenService;
         this.userRepository = userRepository;
     }
 
+    /**
+     * Método para validação de usuário requisitado.
+     * @param loginForm
+     * @return
+     */
     @PostMapping
     public ResponseEntity<TokenDto> authenticate(@RequestBody @Valid LoginForm loginForm) {
         try {
@@ -54,9 +67,15 @@ public class AuthenticationController {
         }
     }
 
+    /**
+     * Método para registro de novo usuário.
+     * @param userForm
+     * @param uriBuilder
+     * @return
+     */
     @PostMapping(value = "/register")
     @Transactional
-    public ResponseEntity<?> register(@RequestBody @Valid UserForm userForm, UriComponentsBuilder uriBuilder) {
+    public ResponseEntity register(@RequestBody @Valid UserForm userForm, UriComponentsBuilder uriBuilder) {
         try {
             User user = userForm.converter();
             userRepository.save(user);
@@ -68,9 +87,15 @@ public class AuthenticationController {
         }
     }
 
+    /**
+     * Método para auteração de usuário.
+     * @param id
+     * @param userFormUpdate
+     * @return
+     */
     @PutMapping(value = "/update/{id}")
     @Transactional
-    public  ResponseEntity<?> update(@PathVariable Long id, @RequestBody @Valid UserFormUpdate userFormUpdate){
+    public  ResponseEntity update(@PathVariable Long id, @RequestBody @Valid UserFormUpdate userFormUpdate){
         try {
             Optional<User> userOptional = userRepository.findById(id);
             if (!userOptional.isPresent())
@@ -84,9 +109,14 @@ public class AuthenticationController {
         }
     }
 
+    /**
+     * Método para exclusão de usuário.
+     * @param id
+     * @return
+     */
     @DeleteMapping(value="/delete/{id}")
     @Transactional
-    public ResponseEntity<?> delete(@PathVariable Long id){
+    public ResponseEntity delete(@PathVariable Long id){
         try {
             Optional<User> optionalUser = userRepository.findById(id);
             if(!optionalUser.isPresent())

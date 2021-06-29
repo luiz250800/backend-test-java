@@ -5,6 +5,9 @@ import br.com.testefcamara.backendtestjava.models.Company;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Classe DTO para retorno de estabelecimento.
+ */
 public class CompanyDto {
     private Long id;
 
@@ -24,6 +27,9 @@ public class CompanyDto {
 
     private int qtVacanciesFilledCar;
 
+    /**
+     * @param company
+     */
     public CompanyDto(Company company) {
         this.id = company.getId();
         this.nmCompany = company.getNmCompany();
@@ -72,6 +78,11 @@ public class CompanyDto {
         return qtVacanciesFilledCar;
     }
 
+    /**
+     * Método para converter lista de estabelecimento para lista de estabelecimento DTO.
+     * @param company
+     * @return
+     */
     public static List<CompanyDto> converter(List<Company> company) {
         return company.stream().map(CompanyDto::new).collect(Collectors.toList());
     }

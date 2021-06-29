@@ -8,6 +8,9 @@ import org.hibernate.annotations.OnDeleteAction;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+/**
+ * Classe model de veículo.
+ */
 @Entity
 public class Vehicle {
 
@@ -42,6 +45,14 @@ public class Vehicle {
     public Vehicle() {
     }
 
+    /**
+     * @param nmBrand
+     * @param nmModel
+     * @param nmColor
+     * @param nrPlate
+     * @param tpVehicle
+     * @param company
+     */
     public Vehicle(String nmBrand, String nmModel, String nmColor, String nrPlate, TypeVehicle tpVehicle, Company company) {
         this.nmBrand = nmBrand;
         this.nmModel = nmModel;
