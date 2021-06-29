@@ -115,7 +115,7 @@ public class CompanyController {
      */
     @DeleteMapping(value="/delete/{id}")
     @Transactional
-    public ResponseEntity delete(@PathVariable Long id){
+    public ResponseEntity<String> delete(@PathVariable Long id){
         try {
             Optional<Company> optionalCompany = companyRepository.findById(id);
             if(!optionalCompany.isPresent())

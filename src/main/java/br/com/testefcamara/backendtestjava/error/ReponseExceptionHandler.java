@@ -24,7 +24,7 @@ public class ReponseExceptionHandler extends ResponseEntityExceptionHandler {
      * @return
      */
     @ExceptionHandler(ResponseStatusException.class)
-    public ResponseEntity handlerException(@NotNull ResponseStatusException exc) {
+    public ResponseEntity<ErrorDto> handlerException(@NotNull ResponseStatusException exc) {
         logger.info(" ---------------------------- WARN ERROR  ----------------------------");
         logger.trace("TRACE ERROR: " + exc.getStackTrace());
         logger.error("ERROR CAUSE: " + exc.getCause().toString());
