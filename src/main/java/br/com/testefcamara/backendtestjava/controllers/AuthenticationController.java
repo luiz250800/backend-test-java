@@ -75,7 +75,7 @@ public class AuthenticationController {
      */
     @PostMapping(value = "/register")
     @Transactional
-    public ResponseEntity register(@RequestBody @Valid UserForm userForm, UriComponentsBuilder uriBuilder) {
+    public ResponseEntity<String> register(@RequestBody @Valid UserForm userForm, UriComponentsBuilder uriBuilder) {
         try {
             User user = userForm.converter();
             userRepository.save(user);
@@ -95,7 +95,7 @@ public class AuthenticationController {
      */
     @PutMapping(value = "/update/{id}")
     @Transactional
-    public  ResponseEntity update(@PathVariable Long id, @RequestBody @Valid UserFormUpdate userFormUpdate){
+    public  ResponseEntity<String> update(@PathVariable Long id, @RequestBody @Valid UserFormUpdate userFormUpdate){
         try {
             Optional<User> userOptional = userRepository.findById(id);
             if (!userOptional.isPresent())
@@ -116,7 +116,7 @@ public class AuthenticationController {
      */
     @DeleteMapping(value="/delete/{id}")
     @Transactional
-    public ResponseEntity delete(@PathVariable Long id){
+    public ResponseEntity<String> delete(@PathVariable Long id){
         try {
             Optional<User> optionalUser = userRepository.findById(id);
             if(!optionalUser.isPresent())
