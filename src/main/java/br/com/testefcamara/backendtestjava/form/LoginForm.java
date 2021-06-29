@@ -5,6 +5,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+/**
+ * Classe para forumulário de login.
+ */
 public class LoginForm {
     @NotNull @NotEmpty
     private String nmEmail;
@@ -28,6 +31,10 @@ public class LoginForm {
         this.nmPassword = nmPassword;
     }
 
+    /**
+     * Método para converter loginForm em UsernamePasswordAuthenticationToken.
+     * @return
+     */
     public UsernamePasswordAuthenticationToken converter() {
         return new UsernamePasswordAuthenticationToken(nmEmail, nmPassword);
     }

@@ -2,6 +2,9 @@ package br.com.testefcamara.backendtestjava.dto;
 
 import java.time.LocalDateTime;
 
+/**
+ * Classe genérica DTO para retorno de erros
+ */
 public class ErrorDto {
 
     private LocalDateTime timestamp = LocalDateTime.now();
@@ -10,6 +13,10 @@ public class ErrorDto {
 
     private String message;
 
+    /**
+     * @param status
+     * @param message
+     */
     public ErrorDto(int status, String message) {
         this.status = status;
         this.message = message;

@@ -12,9 +12,16 @@ import springfox.documentation.spring.web.plugins.Docket;
 
 import java.util.Arrays;
 
+/**
+ * Classe com configurações do Swagger.
+ */
 @Configuration
 public class SwaggerConfigurations {
 
+    /**
+     * Método com as configurações do Swagger do projeto.
+     * @return
+     */
     @Bean
     public Docket backendTestJavaapi() {
         return new Docket(DocumentationType.SWAGGER_2).select()

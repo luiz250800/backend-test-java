@@ -13,12 +13,20 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Classe para tratamento de erros de validação de usuário.
+ */
 @RestControllerAdvice
 public class ErrorValidateHandler {
 
     @Autowired
     private MessageSource messageSource;
 
+    /**
+     * Método para tratamento de retorno de erros de usuário.
+     * @param exc
+     * @return
+     */
     @ResponseStatus(code = HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public List<FormErrorDto> handle(MethodArgumentNotValidException exc){

@@ -18,6 +18,9 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.util.Optional;
 
+/**
+ * Classe controller para CRUD de veículo.
+ */
 @RestController
 @RequestMapping(value = "/api/vehicle", produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 public class VehicleController {
@@ -26,11 +29,20 @@ public class VehicleController {
 
     private final CompanyRepository companyRepository;
 
+    /**
+     * @param vehicleRepository
+     * @param companyRepository
+     */
     public VehicleController(VehicleRepository vehicleRepository, CompanyRepository companyRepository) {
         this.vehicleRepository = vehicleRepository;
         this.companyRepository = companyRepository;
     }
 
+    /**
+     * Método para busca de veículo com determinado ID.
+     * @param id
+     * @return
+     */
     @GetMapping(value = "/{id}")
     public ResponseEntity<VehicleDto> findById(@PathVariable Long id) {
         try {
@@ -45,6 +57,12 @@ public class VehicleController {
         }
     }
 
+    /**
+     * Método para registro de novo veículo.
+     * @param vehicleForm
+     * @param uriBuilder
+     * @return
+     */
     @PostMapping(value = "/register")
     @Transactional
     public ResponseEntity<VehicleDto> register(@RequestBody @Valid VehicleForm vehicleForm, UriComponentsBuilder uriBuilder) {
@@ -61,6 +79,12 @@ public class VehicleController {
         }
     }
 
+    /**
+     * Método para alteração um veículo.
+     * @param id
+     * @param vehicleForm
+     * @return
+     */
     @PutMapping(value = "/update/{id}")
     @Transactional
     public ResponseEntity<VehicleDto> update(@PathVariable Long id, @RequestBody @Valid VehicleUpdateForm vehicleForm) {
@@ -77,6 +101,11 @@ public class VehicleController {
         }
     }
 
+    /**
+     * Método para exclusão de veículo.
+     * @param id
+     * @return
+     */
     @DeleteMapping(value = "/delete/{id}")
     @Transactional
     public ResponseEntity<?> delete(@PathVariable Long id) {

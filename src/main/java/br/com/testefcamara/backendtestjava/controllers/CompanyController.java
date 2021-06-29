@@ -17,6 +17,9 @@ import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Classe controller para CRUD de estabelecimento.
+ */
 @RestController
 @RequestMapping(value = "/api/company", produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 public class CompanyController {
@@ -27,6 +30,10 @@ public class CompanyController {
         this.companyRepository = companyRepository;
     }
 
+    /**
+     * Método para listagem de todos os estabelecimentos cadastrados.
+     * @return
+     */
     @GetMapping
     public List<CompanyDto> listAll(){
         try {
@@ -39,6 +46,11 @@ public class CompanyController {
         }
     }
 
+    /**
+     * Método para busca de estabelecimento com determinado ID.
+     * @param id
+     * @return
+     */
     @GetMapping(value="/{id}")
     public ResponseEntity<CompanyDto> findById(@PathVariable Long id) {
         try {
@@ -53,6 +65,12 @@ public class CompanyController {
         }
     }
 
+    /**
+     * Método para registro de novo estabelecimento.
+     * @param companyForm
+     * @param uriBuilder
+     * @return
+     */
     @PostMapping(value="/register")
     @Transactional
     public ResponseEntity<CompanyDto> register(@RequestBody @Valid CompanyForm companyForm, UriComponentsBuilder uriBuilder){
@@ -68,6 +86,12 @@ public class CompanyController {
         }
     }
 
+    /**
+     * Método para alteração um estabelecimento.
+     * @param id
+     * @param companyForm
+     * @return
+     */
     @PutMapping(value= "/update/{id}")
     @Transactional
     public ResponseEntity<CompanyDto> update(@PathVariable Long id, @RequestBody @Valid CompanyForm companyForm) {
@@ -84,9 +108,14 @@ public class CompanyController {
         }
     }
 
+    /**
+     * Método para exclusão de estabelecimento.
+     * @param id
+     * @return
+     */
     @DeleteMapping(value="/delete/{id}")
     @Transactional
-    public ResponseEntity<?> delete(@PathVariable Long id){
+    public ResponseEntity delete(@PathVariable Long id){
         try {
             Optional<Company> optionalCompany = companyRepository.findById(id);
             if(!optionalCompany.isPresent())

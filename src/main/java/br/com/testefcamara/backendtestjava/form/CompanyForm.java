@@ -10,6 +10,9 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
+/**
+ * Classe para forumulário de estabelecimento.
+ */
 public class CompanyForm {
     @NotNull @NotEmpty
     private String nmCompany;
@@ -72,10 +75,20 @@ public class CompanyForm {
         this.qtTotalVacanciesCar = qtTotalVacanciesCar;
     }
 
+    /**
+     * Método para converter companyForm em company
+     * @return
+     */
     public Company converter() {
         return new Company(nmCompany, cdCnpj, nmAddress, nrPhone, qtTotalVacanciesMotorcycle, qtTotalVacanciesCar);
     }
 
+    /**
+     * Método para efetuar update em estabelecimento.
+     * @param id
+     * @param companyRepository
+     * @return
+     */
     public Company update(Long id, CompanyRepository companyRepository) {
         Company company = companyRepository.getById(id);
 

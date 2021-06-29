@@ -14,17 +14,33 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * Classe TokenFilter para validação de dados de usuário.
+ */
 public class AuthenticationTokenFilter extends OncePerRequestFilter {
 
     @Autowired
     private TokenService tokenService;
     private UserRepository userRepository;
 
+    /**
+     * Construtor recebendo injeção de dependência de tokenService e UserRepository.
+     * @param tokenService
+     * @param userRepository
+     */
     public AuthenticationTokenFilter(TokenService tokenService, UserRepository userRepository) {
         this.tokenService = tokenService;
         this.userRepository = userRepository;
     }
 
+    /**
+     * Método para verificar se o token passado é válido.
+     * @param httpServletRequest
+     * @param httpServletResponse
+     * @param filterChain
+     * @throws ServletException
+     * @throws IOException
+     */
     @Override
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
         String token = recoverToken(httpServletRequest);
@@ -35,6 +51,10 @@ public class AuthenticationTokenFilter extends OncePerRequestFilter {
         filterChain.doFilter(httpServletRequest, httpServletResponse);
     }
 
+    /**
+     * Validando usuário e definindo suas autorizações.
+     * @param token
+     */
     private void authenticateUser(String token) {
         Long idUser = tokenService.getIdUser(token);
         User user = userRepository.findById(idUser).get();
@@ -42,6 +62,12 @@ public class AuthenticationTokenFilter extends OncePerRequestFilter {
         SecurityContextHolder.getContext().setAuthentication(authentication);
     }
 
+
+    /**
+     * Validando string de token passado.
+     * @param httpServletRequest
+     * @return
+     */
     private String recoverToken(HttpServletRequest httpServletRequest) {
         String token = httpServletRequest.getHeader("Authorization");
         if(token == null || token.isEmpty() || !token.startsWith("Bearer ")) {

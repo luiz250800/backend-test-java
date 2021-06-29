@@ -15,6 +15,9 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Classe controller para fluxo de veículo.
+ */
 @RestController
 @RequestMapping(value = "/api/flowCampanyVehicle", produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 public class FlowCompanyVehicleController {
@@ -23,11 +26,21 @@ public class FlowCompanyVehicleController {
 
     private final VehicleRepository vehicleRepository;
 
+    /**
+     * @param companyRepository
+     * @param vehicleRepository
+     */
     public FlowCompanyVehicleController(CompanyRepository companyRepository, VehicleRepository vehicleRepository) {
         this.companyRepository = companyRepository;
         this.vehicleRepository = vehicleRepository;
     }
 
+    /**
+     * Método para geração de relatório de entrada e saida de veículos para uma determinada empresa.
+     * @param idCompany
+     * @param flowCompanyVehicleForm
+     * @return
+     */
     @GetMapping(value = "/{idCompany}")
     public ResponseEntity<FlowCompanyVehicleDto> flowCampanyVehicle(@PathVariable Long idCompany, @RequestBody FlowCompanyVehicleForm flowCompanyVehicleForm) {
         try {

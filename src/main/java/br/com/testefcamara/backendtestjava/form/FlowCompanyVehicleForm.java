@@ -2,6 +2,9 @@ package br.com.testefcamara.backendtestjava.form;
 
 import java.time.LocalDateTime;
 
+/**
+ * Classe com intervalo de datas para relatório de veículos em estabelecimento.
+ */
 public class FlowCompanyVehicleForm {
     private LocalDateTime dhStart;
 
