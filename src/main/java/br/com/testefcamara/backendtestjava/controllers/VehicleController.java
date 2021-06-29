@@ -108,7 +108,7 @@ public class VehicleController {
      */
     @DeleteMapping(value = "/delete/{id}")
     @Transactional
-    public ResponseEntity<?> delete(@PathVariable Long id) {
+    public ResponseEntity<VehicleDto> delete(@PathVariable Long id) {
         try {
             Optional<Vehicle> optionalVehicle = vehicleRepository.findById(id);
             if (!optionalVehicle.isPresent())
